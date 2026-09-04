@@ -8,6 +8,7 @@ import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
 
 type GroupBy = 'none' | 'location' | 'application'
+type ViewMode = 'items' | 'locations'
 
 function uniqueSorted(values: string[]): string[] {
   return Array.from(new Set(values.filter(Boolean))).sort((a, b) =>
@@ -23,12 +24,17 @@ function matchesSearch(item: ItemRecord, q: string): boolean {
   return hay.includes(q)
 }
 
+function locationKey(value: string): string {
+  return value.trim() || 'TBD'
+}
+
 export function ListPage() {
   const { items, exportJson, importJson } = useInventory()
   const [query, setQuery] = useState('')
   const [location, setLocation] = useState('')
   const [application, setApplication] = useState('')
   const [groupBy, setGroupBy] = useState<GroupBy>('none')
+  const [viewMode, setViewMode] = useState<ViewMode>('items')
   const [menuOpen, setMenuOpen] = useState(false)
   const [status, setStatus] = useState<string | null>(null)
   const importRef = useRef<HTMLInputElement>(null)
@@ -43,7 +49,7 @@ export function ListPage() {
     const q = query.trim().toLowerCase()
     return items.filter((item) => {
       if (!matchesSearch(item, q)) return false
-      if (location && item.location !== location) return false
+      if (location && locationKey(item.location) !== locationKey(location)) return false
       if (application && item.application !== application) return false
       return true
     })
@@ -76,6 +82,35 @@ export function ListPage() {
       .map(([key, groupItems]) => ({ key, items: groupItems }))
   }, [filtered, groupBy])
 
+  const locationRows = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    const map = new Map<string, { name: string; qty: number }>()
+    for (const item of items) {
+      if (!matchesSearch(item, q)) continue
+      if (application && item.application !== application) continue
+      const name = locationKey(item.location)
+      const row = map.get(name) ?? { name, qty: 0 }
+      row.qty += item.quantity
+      map.set(name, row)
+    }
+    return Array.from(map.values()).sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
+    )
+  }, [items, query, application])
+
+  const locationTotals = useMemo(() => {
+    let qty = 0
+    for (const row of locationRows) qty += row.qty
+    return { count: locationRows.length, qty }
+  }, [locationRows])
+
+  function openLocation(name: string) {
+    setLocation(name)
+    setApplication('')
+    setGroupBy('none')
+    setViewMode('items')
+  }
+
   async function handleExport() {
     try {
       const json = await exportJson()
@@ -106,6 +141,8 @@ export function ListPage() {
       setStatus(err instanceof Error ? err.message : 'Import failed.')
     }
   }
+
+  const showingLocations = viewMode === 'locations'
 
   return (
     <div className="page">
@@ -153,6 +190,31 @@ export function ListPage() {
         onChange={(e) => void handleImport(e)}
       />
 
+      <div className="view-toggle" id="view-toggle" role="tablist" aria-label="View mode">
+        <button
+          type="button"
+          id="view-items"
+          name="viewItems"
+          role="tab"
+          aria-selected={viewMode === 'items'}
+          className={viewMode === 'items' ? 'view-tab is-active' : 'view-tab'}
+          onClick={() => setViewMode('items')}
+        >
+          Items
+        </button>
+        <button
+          type="button"
+          id="view-locations"
+          name="viewLocations"
+          role="tab"
+          aria-selected={viewMode === 'locations'}
+          className={viewMode === 'locations' ? 'view-tab is-active' : 'view-tab'}
+          onClick={() => setViewMode('locations')}
+        >
+          Locations
+        </button>
+      </div>
+
       <div className="filters">
         <label className="sr-only" htmlFor="search-query">
           Search
@@ -165,89 +227,155 @@ export function ListPage() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <div className="filter-row">
-          <label htmlFor="filter-location" className="sr-only">
-            Location
-          </label>
-          <select
-            id="filter-location"
-            name="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          >
-            <option value="">All locations</option>
-            {locations.map((loc) => (
-              <option key={loc} value={loc}>
-                {loc}
-              </option>
-            ))}
-          </select>
-          <label htmlFor="filter-application" className="sr-only">
-            Application
-          </label>
-          <select
-            id="filter-application"
-            name="application"
-            value={application}
-            onChange={(e) => setApplication(e.target.value)}
-          >
-            <option value="">All applications</option>
-            {applications.map((app) => (
-              <option key={app} value={app}>
-                {app}
-              </option>
-            ))}
-          </select>
-        </div>
-        <label htmlFor="group-by" className="sr-only">
-          Group by
-        </label>
-        <select
-          id="group-by"
-          name="groupBy"
-          value={groupBy}
-          onChange={(e) => setGroupBy(e.target.value as GroupBy)}
-        >
-          <option value="none">No grouping</option>
-          <option value="location">Group by location</option>
-          <option value="application">Group by application</option>
-        </select>
+        {showingLocations ? (
+          <>
+            <label htmlFor="filter-application" className="sr-only">
+              Application
+            </label>
+            <select
+              id="filter-application"
+              name="application"
+              value={application}
+              onChange={(e) => setApplication(e.target.value)}
+            >
+              <option value="">All applications</option>
+              {applications.map((app) => (
+                <option key={app} value={app}>
+                  {app}
+                </option>
+              ))}
+            </select>
+          </>
+        ) : (
+          <>
+            <div className="filter-row">
+              <label htmlFor="filter-location" className="sr-only">
+                Location
+              </label>
+              <select
+                id="filter-location"
+                name="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              >
+                <option value="">All locations</option>
+                {locations.map((loc) => (
+                  <option key={loc} value={loc}>
+                    {loc}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="filter-application" className="sr-only">
+                Application
+              </label>
+              <select
+                id="filter-application"
+                name="application"
+                value={application}
+                onChange={(e) => setApplication(e.target.value)}
+              >
+                <option value="">All applications</option>
+                {applications.map((app) => (
+                  <option key={app} value={app}>
+                    {app}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <label htmlFor="group-by" className="sr-only">
+              Group by
+            </label>
+            <select
+              id="group-by"
+              name="groupBy"
+              value={groupBy}
+              onChange={(e) => setGroupBy(e.target.value as GroupBy)}
+            >
+              <option value="none">No grouping</option>
+              <option value="location">Group by location</option>
+              <option value="application">Group by application</option>
+            </select>
+          </>
+        )}
       </div>
 
       {status ? <p className="status-line">{status}</p> : null}
 
-      <p className="count-line" id="item-count">
-        {filtered.length} item{filtered.length === 1 ? '' : 's'}
-      </p>
-
-      <div className="list">
-        {groups.map((group) => (
-          <section key={group.key || 'all'} className="group">
-            {group.key ? (
-              <h2 className="group-head">
-                {group.key}
-                <span>{group.items.length}</span>
-              </h2>
-            ) : null}
-            <div className="goods-grid">
-              {group.items.map((item) => (
-                <ItemCard key={item.id} item={item} />
-              ))}
+      {showingLocations ? (
+        <>
+          <p className="count-line" id="location-count">
+            {locationRows.length} location{locationRows.length === 1 ? '' : 's'}
+          </p>
+          <ul className="location-list" id="location-list">
+            {locationRows.map((row) => {
+              const slug = encodeURIComponent(row.name)
+              return (
+                <li key={row.name}>
+                  <button
+                    type="button"
+                    className="location-row"
+                    id={`location-row-${slug}`}
+                    onClick={() => openLocation(row.name)}
+                  >
+                    <span className="location-row-bullet" aria-hidden="true">
+                      •
+                    </span>
+                    <span className="location-row-name">{row.name}</span>
+                    <span className="location-row-qty" id={`location-qty-${slug}`}>
+                      {row.qty}
+                    </span>
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+          {locationRows.length === 0 ? (
+            <p className="empty">No locations match. Try a different search.</p>
+          ) : null}
+          {locationRows.length > 0 ? (
+            <div className="summary-bar" id="locations-summary">
+              <span id="locations-summary-count">Locations: {locationTotals.count}</span>
+              <span className="summary-sep">|</span>
+              <span id="locations-summary-qty">Qty: {locationTotals.qty}</span>
             </div>
-          </section>
-        ))}
-        {filtered.length === 0 ? (
-          <p className="empty">No items match. Try a different search or add a new item.</p>
-        ) : null}
-      </div>
+          ) : null}
+        </>
+      ) : (
+        <>
+          <p className="count-line" id="item-count">
+            {filtered.length} item{filtered.length === 1 ? '' : 's'}
+          </p>
 
-      {filtered.length > 0 ? (
-        <div className="summary-bar" id="list-summary">
-          <span id="list-summary-qty">Qty: {filteredTotals.qty}</span>
-          <span className="summary-sep">|</span>
-          <span id="list-summary-total">Total: {money(filteredTotals.cost)}</span>
-        </div>
-      ) : null}
+          <div className="list">
+            {groups.map((group) => (
+              <section key={group.key || 'all'} className="group">
+                {group.key ? (
+                  <h2 className="group-head">
+                    {group.key}
+                    <span>{group.items.length}</span>
+                  </h2>
+                ) : null}
+                <div className="goods-grid">
+                  {group.items.map((item) => (
+                    <ItemCard key={item.id} item={item} />
+                  ))}
+                </div>
+              </section>
+            ))}
+            {filtered.length === 0 ? (
+              <p className="empty">No items match. Try a different search or add a new item.</p>
+            ) : null}
+          </div>
+
+          {filtered.length > 0 ? (
+            <div className="summary-bar" id="list-summary">
+              <span id="list-summary-qty">Qty: {filteredTotals.qty}</span>
+              <span className="summary-sep">|</span>
+              <span id="list-summary-total">Total: {money(filteredTotals.cost)}</span>
+            </div>
+          ) : null}
+        </>
+      )}
 
       <button
         type="button"

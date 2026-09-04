@@ -34,6 +34,7 @@ It will look like a regular app.
 
 - Browse a dense **2–3 column photo grid**. Each card shows the **primary** photo (slot 0), name, quantity, cost / recommended markup, a short description, and location. Extra photos show as a tiny **+N** badge — open the item for the full gallery.
 - Search the box at the top (name, notes, location, application).
+- Switch **Items** / **Locations** at the top. Locations is a simple list (name + qty sum); tap a row to open items there.
 - Filter or group by **location** or **application**.
 - Tap an item to see the big card (photo gallery on top / left, details below). Each item can have up to 3 photos.
 - Tap the big **+** button to add something (`/add`).
@@ -132,6 +133,14 @@ Prefer `photoDataUrls` on import (trim to 3). Export writes `photoDataUrls`, plu
 | Import file | `import-file` | `importFile` |
 | Item count | `item-count` | |
 | Filtered summary | `list-summary` (`list-summary-qty`, `list-summary-total`) | |
+| View: Items | `view-items` | `viewItems` |
+| View: Locations | `view-locations` | `viewLocations` |
+| View toggle wrap | `view-toggle` | |
+| Location list | `location-list` | |
+| Location count | `location-count` | |
+| Locations summary | `locations-summary` (`locations-summary-count`, `locations-summary-qty`) | |
+
+View mode: `#view-items` / `#view-locations` toggles Items (goods grid) vs Locations (simple list). Each location row is `#location-row-<urlencoded-name>` with qty `#location-qty-<urlencoded-name>` (sum of `item.quantity`). Tap a row to filter Items by that location. No dollar totals on location rows.
 
 Alerts: `#btn-alerts` opens `#alerts-panel`. Red `#alerts-dot` shows for new/active low-stock alerts until the panel is opened (seen ids stored in `localStorage` key `inventory-alerts-seen-ids`). Empty copy: **No low stock alerts**. Each row links to the item detail.
 
