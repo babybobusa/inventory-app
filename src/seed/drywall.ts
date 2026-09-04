@@ -159,6 +159,8 @@ function toRecord(spec: SeedSpec, photoCount: number, now: number): ItemRecord {
     location: spec.location,
     application: spec.application,
     photoCount,
+    lowStockAlertEnabled: false,
+    lowStockThreshold: 2,
     createdAt: now,
     updatedAt: now,
   }
@@ -176,7 +178,7 @@ async function fetchSeedPhoto(photoFile: string): Promise<Blob | undefined> {
 
 let seedLock: Promise<void> | null = null
 
-const SEED_PHOTO_VERSION = '2'
+const SEED_PHOTO_VERSION = '3'
 const SEED_PHOTO_VERSION_KEY = 'inventory-seed-photo-version'
 
 async function seedOnce(adapter: InventoryAdapter): Promise<void> {
