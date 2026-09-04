@@ -261,7 +261,8 @@ button {
 .photo-placeholder,
 .form-photo,
 .product-photo {
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   background: #eef3f1;
 }
 
