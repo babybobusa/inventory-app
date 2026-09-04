@@ -18,7 +18,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-andersen-spring',
     name: "(Andersen) screen door tension spring",
-    description: "Andersen screen door tension spring; used to hold screen | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Andersen screen door tension spring; used to hold screen",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 3rd shelf',
@@ -29,7 +29,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-screen-spline',
     name: "ADFORS .125 x 25 ft screen spline",
-    description: "ADFORS black screen spline .125 in x 25 ft (StoDo listed as 1.25) | Cost check: Kept StoDo cost (typical retail range)",
+    description: "ADFORS black screen spline .125 in x 25 ft (StoDo listed as 1.25)",
     quantity: 2,
     cost: 15.0,
     location: 'Black closet 3rd shelf',
@@ -40,7 +40,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-wire-12-3',
     name: "12/3 wire",
-    description: "12/3 electrical wire, about 10 ft | Cost check: Kept StoDo cost (typical retail range)",
+    description: "12/3 electrical wire, about 10 ft",
     quantity: 1,
     cost: 2.0,
     location: 'Black closet 3rd shelf',
@@ -51,7 +51,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-wire-14-3',
     name: "14/3 wire",
-    description: "14/3 electrical wire, about 125 ft | Cost check: Kept StoDo cost (typical retail range)",
+    description: "14/3 electrical wire, about 125 ft",
     quantity: 1,
     cost: 1.5,
     location: 'Black closet 3rd shelf',
@@ -62,7 +62,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-gfci-15a',
     name: "15 amp GFCI outlet",
-    description: "Leviton 15 amp tamper-resistant GFCI outlet | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Leviton 15 amp tamper-resistant GFCI outlet",
     quantity: 1,
     cost: 12.0,
     location: 'Black closet 3rd shelf',
@@ -73,7 +73,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-outlet-15a-tr',
     name: "15 amp outlet (tamper resistant)",
-    description: "15 amp tamper-resistant duplex outlet | Cost check: Kept StoDo cost (typical retail range)",
+    description: "15 amp tamper-resistant duplex outlet",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 3rd shelf',
@@ -84,7 +84,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-outlet-15a',
     name: "15 amp outlet",
-    description: "15 amp duplex outlet | Cost check: Kept StoDo cost (typical retail range)",
+    description: "15 amp duplex outlet",
     quantity: 1,
     cost: 3.5,
     location: 'Black closet 3rd shelf',
@@ -95,7 +95,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-ceiling-box-4in',
     name: "4 in new work ceiling box",
-    description: "4 inch new-work round plastic ceiling box | Cost check: Kept StoDo cost (typical retail range)",
+    description: "4 inch new-work round plastic ceiling box",
     quantity: 2,
     cost: 3.5,
     location: 'Black closet 3rd shelf',
@@ -106,7 +106,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-double-blank',
     name: "Double gang blank wallplate",
-    description: "White double-gang blank wall plate | Cost check: Kept StoDo cost (typical retail range)",
+    description: "White double-gang blank wall plate",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 3rd shelf',
@@ -117,7 +117,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-screen-closer',
     name: "Heavy duty screen door closer",
-    description: "Heavy duty pneumatic screen door closer | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Heavy duty pneumatic screen door closer",
     quantity: 1,
     cost: 35.0,
     location: 'Black closet 3rd shelf',
@@ -128,7 +128,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-hinge-light',
     name: "Hinge (light duty)",
-    description: "Light duty square corner hinge | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Light duty square corner hinge",
     quantity: 7,
     cost: 2.0,
     location: 'Black closet 3rd shelf',
@@ -139,7 +139,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-kwikset-knob',
     name: "Keyed Kwikset doorknob (exterior)",
-    description: "Keyed Kwikset exterior doorknob set | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Keyed Kwikset exterior doorknob set",
     quantity: 1,
     cost: 15.0,
     location: 'Black closet 3rd shelf',
@@ -150,7 +150,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-lv-double',
     name: "Low voltage double gang",
-    description: "Orange low-voltage double-gang mounting bracket | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Orange low-voltage double-gang mounting bracket",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 3rd shelf',
@@ -161,7 +161,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-lv-single',
     name: "Low voltage single gang",
-    description: "Orange low-voltage single-gang mounting bracket | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Orange low-voltage single-gang mounting bracket",
     quantity: 1,
     cost: 4.5,
     location: 'Black closet 3rd shelf',
@@ -172,7 +172,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-misc-doorknob',
     name: "Misc doorknob pieces",
-    description: "Assorted doorknob/door hardware parts | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Assorted doorknob/door hardware parts",
     quantity: 0,
     cost: 0.0,
     location: 'Black closet 3rd shelf',
@@ -183,7 +183,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-chandelier-box',
     name: "Old work chandelier box",
-    description: "Old-work chandelier/ceiling fan support box with brace | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Old-work chandelier/ceiling fan support box with brace",
     quantity: 1,
     cost: 35.0,
     location: 'Black closet 3rd shelf',
@@ -194,7 +194,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-paddle-switch',
     name: "Paddle light switch",
-    description: "White paddle/rocker light switch | Cost check: Kept StoDo cost (typical retail range)",
+    description: "White paddle/rocker light switch",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 3rd shelf',
@@ -205,7 +205,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-blank-metal',
     name: "Single gang blank metal wall plate",
-    description: "Single-gang blank metal wall plate, primed white | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Single-gang blank metal wall plate, primed white",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 3rd shelf',
@@ -216,7 +216,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-conduit-plate',
     name: "Single gang conduit plate",
-    description: "Single-gang metal conduit cover plate | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Single-gang metal conduit cover plate",
     quantity: 1,
     cost: 3.5,
     location: 'Black closet 3rd shelf',
@@ -227,7 +227,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-switch-outlet-cover',
     name: "Single gang light switch/outlet cover",
-    description: "Single-gang decorator/GFCI style wall plate | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Single-gang decorator/GFCI style wall plate",
     quantity: 1,
     cost: 2.5,
     location: 'Black closet 3rd shelf',
@@ -238,7 +238,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-outlet-cover',
     name: "Single gang outlet cover (standard)",
-    description: "Standard duplex outlet wall plate | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Standard duplex outlet wall plate",
     quantity: 2,
     cost: 3.5,
     location: 'Black closet 3rd shelf',
@@ -249,7 +249,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-toggle-cover',
     name: "Single gang standard light switch cover",
-    description: "Standard single-gang toggle switch wall plate | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Standard single-gang toggle switch wall plate",
     quantity: 4,
     cost: 2.0,
     location: 'Black closet 3rd shelf',
@@ -260,7 +260,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-wire-fish',
     name: "Wire fish",
-    description: "Wire fishing tool (fish tape) | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Wire fishing tool (fish tape)",
     quantity: 0,
     cost: 0.0,
     location: 'Black closet 3rd shelf',
@@ -304,7 +304,17 @@ export async function seedCloset3Missing(adapter: InventoryAdapter): Promise<voi
   const byId = new Map(existing.map((item) => [item.id, item]))
   const now = Date.now()
   for (const spec of CLOSET3_SEED) {
-    if (byId.has(spec.id)) continue
+    const existingItem = byId.get(spec.id)
+    if (existingItem) {
+      if (/cost\s*check/i.test(existingItem.description || "")) {
+        await adapter.upsert({
+          ...existingItem,
+          description: spec.description,
+          updatedAt: Date.now(),
+        })
+      }
+      continue
+    }
     const shot = await fetchSeedPhoto(spec.photoFile)
     const listing = await fetchSeedPhoto(spec.listingPhotoFile)
     const photos = [shot, listing]

@@ -18,7 +18,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-pvc-elbow-1in',
     name: "1 in 90 degree pipe elbow",
-    description: "White PVC 90-degree elbow, 1 inch | Cost check: Kept StoDo cost (typical retail range)",
+    description: "White PVC 90-degree elbow, 1 inch",
     quantity: 2,
     cost: 2.0,
     location: 'Black closet 2nd shelf',
@@ -29,7 +29,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-oatey-washer-1-5',
     name: "1-1/2 washer",
-    description: "Oatey red rubber washers for 1-1/2 in fittings | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Oatey red rubber washers for 1-1/2 in fittings",
     quantity: 2,
     cost: 5.0,
     location: 'Black closet 2nd shelf',
@@ -40,7 +40,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-pvc-elbow-1-5',
     name: "1-1/2 in 90 degree elbow",
-    description: "White PVC 90-degree elbow, 1-1/2 inch | Cost check: Kept StoDo cost (typical retail range)",
+    description: "White PVC 90-degree elbow, 1-1/2 inch",
     quantity: 1,
     cost: 2.5,
     location: 'Black closet 2nd shelf',
@@ -51,7 +51,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-pvc-coupling-1-5',
     name: "1-1/2 in coupling",
-    description: "White PVC coupling, 1-1/2 inch | Cost check: Kept StoDo cost (typical retail range)",
+    description: "White PVC coupling, 1-1/2 inch",
     quantity: 5,
     cost: 1.5,
     location: 'Black closet 2nd shelf',
@@ -62,7 +62,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-jhook-hanger',
     name: "1-1/2 J-hook pipe hanger",
-    description: "White plastic J-hook pipe hanger for 1-1/2 in pipe | Cost check: Kept StoDo cost (typical retail range)",
+    description: "White plastic J-hook pipe hanger for 1-1/2 in pipe",
     quantity: 1,
     cost: 7.0,
     location: 'Black closet 2nd shelf',
@@ -73,7 +73,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-faucet-washers',
     name: "Assorted flat faucet washers",
-    description: "Everbilt assorted flat faucet washers, 24 pcs | Cost check: Assorted faucet washers typically ~$3\u20136; StoDo $0 undercosted",
+    description: "Everbilt assorted flat faucet washers, 24 pcs",
     quantity: 1,
     cost: 4.0,
     location: 'Black closet 2nd shelf',
@@ -84,7 +84,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-oatey-assorted-washers',
     name: "Assorted washers",
-    description: "Oatey assorted washers 1-1/4 & 1-1/2 | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Oatey assorted washers 1-1/4 & 1-1/2",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 2nd shelf',
@@ -95,7 +95,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-popup-drain-washer',
     name: "Bathroom pop-up drain washer",
-    description: "Everbilt bathroom pop-up drain washer | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Everbilt bathroom pop-up drain washer",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 2nd shelf',
@@ -106,7 +106,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-duck-tape',
     name: "Duck tape",
-    description: "Duck brand silver duct tape roll | Cost check: Duck tape typically ~$4\u20137",
+    description: "Duck brand silver duct tape roll",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 2nd shelf',
@@ -117,7 +117,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-ge-silicone',
     name: "GE silicone",
-    description: "GE white silicone caulk, 7x stronger formula | Cost check: Home Depot GE Supreme Silicone 10.1 oz white ~$11.98",
+    description: "GE white silicone caulk, 7x stronger formula",
     quantity: 1,
     cost: 11.98,
     location: 'Black closet 2nd shelf',
@@ -128,7 +128,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-goo-gone',
     name: "Goo Gone",
-    description: "Goo Gone Pro-Power adhesive remover | Cost check: Goo Gone typically ~$6\u201310; StoDo $0 undercosted",
+    description: "Goo Gone Pro-Power adhesive remover",
     quantity: 1,
     cost: 8.0,
     location: 'Black closet 2nd shelf',
@@ -139,7 +139,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-gorilla-tape',
     name: "Gorilla tape",
-    description: "Gorilla brand heavy-duty duct tape | Cost check: Gorilla tape roll typically ~$10\u201315; StoDo $15 high-ish, use $12",
+    description: "Gorilla brand heavy-duty duct tape",
     quantity: 1,
     cost: 12.0,
     location: 'Black closet 2nd shelf',
@@ -150,7 +150,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-door-closer',
     name: "Heavy duty commercial hydraulic door closer",
-    description: "Commercial hydraulic door closer in retail box | Cost check: Home Depot Universal Hardware heavy-duty closer ~$75\u2013118; using $118",
+    description: "Commercial hydraulic door closer in retail box",
     quantity: 1,
     cost: 118.0,
     location: 'Black closet 2nd shelf',
@@ -161,7 +161,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-hvac-tape',
     name: "HVAC duct tape",
-    description: "Silver HVAC foil duct tape | Cost check: Foil HVAC tape typically ~$5\u20138",
+    description: "Silver HVAC foil duct tape",
     quantity: 2,
     cost: 6.0,
     location: 'Black closet 2nd shelf',
@@ -172,7 +172,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-laundry-strainer',
     name: "Laundry tub strainer",
-    description: "Bathtub/laundry tub metal mesh hair catcher strainer | Cost check: Tub strainer typically ~$6\u201312",
+    description: "Bathtub/laundry tub metal mesh hair catcher strainer",
     quantity: 1,
     cost: 8.0,
     location: 'Black closet 2nd shelf',
@@ -183,7 +183,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-liquid-nails',
     name: "Liquid Nails Fuze-It Max",
-    description: "Liquid Nails Fuze-It Max 5x adhesive tube | Cost check: Fuze-It Max typically ~$10\u201315",
+    description: "Liquid Nails Fuze-It Max 5x adhesive tube",
     quantity: 1,
     cost: 12.0,
     location: 'Black closet 2nd shelf',
@@ -194,7 +194,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-loctite-foam',
     name: "Loctite Tite Foam Gaps & Cracks",
-    description: "Loctite Tite Foam gaps and cracks insulating foam | Cost check: Tite Foam typically ~$6\u201310; StoDo $5 a bit low \u2192 $7",
+    description: "Loctite Tite Foam gaps and cracks insulating foam",
     quantity: 1,
     cost: 7.0,
     location: 'Black closet 2nd shelf',
@@ -205,7 +205,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-primer-cement',
     name: "Plumbers primer/cement",
-    description: "Oatey purple primer and PVC cement pair | Cost check: Oatey primer+cement pair typically ~$15\u201322",
+    description: "Oatey purple primer and PVC cement pair",
     quantity: 1,
     cost: 18.0,
     location: 'Black closet 2nd shelf',
@@ -216,7 +216,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-plumbers-putty',
     name: "Plumbers putty",
-    description: "Oatey plumber\\\\'s putty tub | Cost check: Home Depot Oatey 14 oz plumbers putty ~$2.52",
+    description: "Oatey plumber\\\\'s putty tub",
     quantity: 1,
     cost: 2.52,
     location: 'Black closet 2nd shelf',
@@ -227,7 +227,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-ball-rod',
     name: "Pop up ball rod assembly",
-    description: "Bathroom sink pop-up ball rod assembly | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Bathroom sink pop-up ball rod assembly",
     quantity: 1,
     cost: 10.0,
     location: 'Black closet 2nd shelf',
@@ -238,7 +238,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-rod-clips',
     name: "Pop up drain rod clips",
-    description: "Metal V-shaped pop-up drain rod clips | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Metal V-shaped pop-up drain rod clips",
     quantity: 2,
     cost: 3.0,
     location: 'Black closet 2nd shelf',
@@ -249,7 +249,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-drain-stopper',
     name: "Pop-up drain stopper",
-    description: "White plastic pop-up drain stopper approx 1-3/8 in x 4-1/x | Cost check: Kept StoDo cost (typical retail range)",
+    description: "White plastic pop-up drain stopper approx 1-3/8 in x 4-1/x",
     quantity: 2,
     cost: 10.0,
     location: 'Black closet 2nd shelf',
@@ -260,7 +260,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-recessed-kit',
     name: "Recessed lights converter kit",
-    description: "Recessed light converter kit retail box | Cost check: StoDo $12 plausible",
+    description: "Recessed light converter kit retail box",
     quantity: 1,
     cost: 12.0,
     location: 'Black closet 2nd shelf',
@@ -271,7 +271,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-ptrap-washers',
     name: "Reducing P-trap washers",
-    description: "Red rubber reducing washers 1-1/4 x 1-1/2 for P-trap | Cost check: Kept StoDo cost (typical retail range)",
+    description: "Red rubber reducing washers 1-1/4 x 1-1/2 for P-trap",
     quantity: 8,
     cost: 3.5,
     location: 'Black closet 2nd shelf',
@@ -282,7 +282,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-rubber-coupling',
     name: "Rubber 1-1/2 x 1-1/2 black coupling",
-    description: "Black rubber pipe coupling 1-1/2 x 1-1/2 with metal clamps | Cost check: 1.5 rubber coupling typically ~$6\u201312",
+    description: "Black rubber pipe coupling 1-1/2 x 1-1/2 with metal clamps",
     quantity: 1,
     cost: 9.0,
     location: 'Black closet 2nd shelf',
@@ -293,7 +293,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-tub-stopper',
     name: "Rubber stopper with chain",
-    description: "White rubber tub stopper with bead chain, fits ~1-1/x | Cost check: Kept StoDo cost (typical retail range)",
+    description: "White rubber tub stopper with bead chain, fits ~1-1/x",
     quantity: 1,
     cost: 5.0,
     location: 'Black closet 2nd shelf',
@@ -304,7 +304,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-spray-paint-satin',
     name: "Spray paint",
-    description: "Rust-Oleum 2X Ultra Cover satin primer & paint | Cost check: Rust-Oleum 2X Ultra Cover typical ~$7\u201310",
+    description: "Rust-Oleum 2X Ultra Cover satin primer & paint",
     quantity: 1,
     cost: 8.0,
     location: 'Black closet 2nd shelf',
@@ -315,7 +315,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-spray-paint-gold',
     name: "Spray paint, gold",
-    description: "Rust-Oleum Metallic shiny gold spray paint | Cost check: Home Depot Rust-Oleum Specialty Metallic Gold ~$6.53\u20139.20; using $8",
+    description: "Rust-Oleum Metallic shiny gold spray paint",
     quantity: 1,
     cost: 8.0,
     location: 'Black closet 2nd shelf',
@@ -326,7 +326,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-faucet-supply',
     name: "Standard faucet supply line",
-    description: "Braided faucet supply line, 20 in, 1/2 in connections | Cost check: 20in braided supply line typically ~$8\u201315; StoDo $15/ea keep near retail $12",
+    description: "Braided faucet supply line, 20 in, 1/2 in connections",
     quantity: 2,
     cost: 12.0,
     location: 'Black closet 2nd shelf',
@@ -337,7 +337,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-teflon-tape',
     name: "Teflon tape",
-    description: "White PTFE thread seal tape 1/2 in x ~22 ft | Cost check: PTFE tape typically ~$1\u20133; StoDo $1.25 ok \u2192 $1.50",
+    description: "White PTFE thread seal tape 1/2 in x ~22 ft",
     quantity: 1,
     cost: 1.5,
     location: 'Black closet 2nd shelf',
@@ -348,7 +348,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-toilet-lever',
     name: "Toilet lever",
-    description: "Universal chrome toilet tank lever (Korky/StrongArm style) | Cost check: Korky StrongARM chrome ~$16.84\u201318.49",
+    description: "Universal chrome toilet tank lever (Korky/StrongArm style)",
     quantity: 1,
     cost: 17.0,
     location: 'Black closet 2nd shelf',
@@ -359,7 +359,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-turpentine',
     name: "Turpentine",
-    description: "Klean-Strip turpentine metal can | Cost check: Klean-Strip turpentine typically ~$10\u201315; StoDo $0 undercosted",
+    description: "Klean-Strip turpentine metal can",
     quantity: 1,
     cost: 12.0,
     location: 'Black closet 2nd shelf',
@@ -370,7 +370,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-frost-spray',
     name: "Window Frost spray paint",
-    description: "Rust-Oleum frosted glass / window frost spray paint | Cost check: StoDo $7.50; Frosted Glass spray typically ~$7\u20139",
+    description: "Rust-Oleum frosted glass / window frost spray paint",
     quantity: 3,
     cost: 7.5,
     location: 'Black closet 2nd shelf',
@@ -381,7 +381,7 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   {
     id: 'closet2-wood-filler',
     name: "Wood filler",
-    description: "DAP Plastic Wood-X natural color wood filler | Cost check: Home Depot DAP Plastic Wood-X 8 oz ~$8.03",
+    description: "DAP Plastic Wood-X natural color wood filler",
     quantity: 1,
     cost: 8.03,
     location: 'Black closet 2nd shelf',
@@ -426,7 +426,17 @@ export async function seedCloset2Missing(adapter: InventoryAdapter): Promise<voi
   const byId = new Map(existing.map((item) => [item.id, item]))
   const now = Date.now()
   for (const spec of CLOSET2_SEED) {
-    if (byId.has(spec.id)) continue
+    const existingItem = byId.get(spec.id)
+    if (existingItem) {
+      if (/cost\s*check/i.test(existingItem.description || "")) {
+        await adapter.upsert({
+          ...existingItem,
+          description: spec.description,
+          updatedAt: Date.now(),
+        })
+      }
+      continue
+    }
     const shot = await fetchSeedPhoto(spec.photoFile)
     const listing = await fetchSeedPhoto(spec.listingPhotoFile)
     const photos = [shot, listing]
