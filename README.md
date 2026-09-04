@@ -4,7 +4,7 @@ This is a simple list of things you have — tools, supplies, leftover materials
 You open it in the phone's web browser. The list is saved **on the phone**,
 not in the cloud.
 
-It already starts with the drywall finishing supplies (photos included).
+It already starts with the drywall finishing supplies and the Black closet 2nd shelf pack (photos included).
 
 ## How to open it
 
@@ -42,7 +42,8 @@ It will look like a regular app.
 - The three dots let you **export** a backup file or **import** one.
 
 New items default location to **TBD**. The starter drywall set uses
-application **Drywall finishing**.
+application **Drywall finishing**. Closet2 seeds use location **Black closet 2nd shelf**
+and application **Hardware / plumbing supplies**.
 
 Recommended price is always **cost x 1.20**. You don't type it; the app fills it in.
 
@@ -137,6 +138,8 @@ Each row: `#item-card-<item-id>`.
 
 Starter item ids:
 
+Drywall (top shelf):
+
 - `seed-hercules-220-pack`
 - `seed-hercules-120-pack`
 - `seed-hercules-p120-disc`
@@ -150,6 +153,8 @@ Starter item ids:
 - `seed-hand-sander`
 - `seed-sanding-sponges`
 
+Black closet 2nd shelf (34 items, dual photos): see `src/seed/closet2.ts` (`CLOSET2_SEED`, ids `closet2-*`). Sample: `closet2-pvc-elbow-1in`.
+
 ### Routes
 
 - List: `/`
@@ -159,6 +164,9 @@ Starter item ids:
 
 ## If the list is empty
 
-The 12 drywall items (with photos from `public/seed-photos/`) load
-automatically the first time the app opens with an empty database.
-Each seed item still has one photo; that is fine (`photoCount` 1).
+`ensureSeeded` loads the 12 drywall items (one photo each from `public/seed-photos/`)
+and backfills any missing Black closet 2nd shelf items from `CLOSET2_SEED`
+(crop + retailer listing photos under `public/seed-photos/closet2/` and
+`public/seed-photos/closet2-listing/`). Existing item ids are never wiped —
+missing closet2 ids are inserted only. Drywall `SEED_PHOTO_VERSION` refresh
+behavior is unchanged.
