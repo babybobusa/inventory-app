@@ -389,6 +389,28 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
     photoFile: 'closet2/closet2-wood-filler.jpg',
     listingPhotoFile: 'closet2-listing/closet2-wood-filler.jpg',
   },
+  {
+    id: 'closet2-drain-weasel-handle',
+    name: "Drain Weasel reusable handle",
+    description: "FlexiSnake Drain Weasel reusable spinning handle for hair-clog refill wands",
+    quantity: 1,
+    cost: 6.98,
+    location: 'Black closet 2nd shelf',
+    application: 'Hardware / plumbing supplies',
+    photoFile: 'closet2/closet2-drain-weasel-handle.jpg',
+    listingPhotoFile: 'closet2-listing/closet2-drain-weasel-handle.jpg',
+  },
+  {
+    id: 'closet2-drain-weasel-refill',
+    name: "Drain Weasel hair clog refill (2 wands)",
+    description: "Drain Weasel 18 in hair clog refill wands, 2-pack; handle sold separately",
+    quantity: 1,
+    cost: 6.98,
+    location: 'Black closet 2nd shelf',
+    application: 'Hardware / plumbing supplies',
+    photoFile: 'closet2/closet2-drain-weasel-refill.jpg',
+    listingPhotoFile: 'closet2-listing/closet2-drain-weasel-refill.jpg',
+  },
 ]
 
 

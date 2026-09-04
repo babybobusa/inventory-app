@@ -11,6 +11,7 @@ export type PaintSeedSpec = {
   location: string
   application: string
   photoFile: string
+  listingPhotoFile: string
 }
 
 export const PAINT_SEED: PaintSeedSpec[] = [
@@ -23,6 +24,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-wooster-metal-tray.jpg',
+    listingPhotoFile: 'paint-listing/paint-wooster-metal-tray.jpg',
   },
   {
     id: 'paint-white-tray',
@@ -33,6 +35,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-white-tray.jpg',
+    listingPhotoFile: 'paint-listing/paint-white-tray.jpg',
   },
   {
     id: 'paint-orange-tray',
@@ -43,6 +46,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-orange-tray.jpg',
+    listingPhotoFile: 'paint-listing/paint-orange-tray.jpg',
   },
   {
     id: 'paint-tray-liners',
@@ -53,6 +57,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-tray-liners.jpg',
+    listingPhotoFile: 'paint-listing/paint-tray-liners.jpg',
   },
   {
     id: 'paint-handy-pail',
@@ -63,6 +68,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-handy-pail.jpg',
+    listingPhotoFile: 'paint-listing/paint-handy-pail.jpg',
   },
   {
     id: 'paint-pail-liners',
@@ -73,6 +79,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-pail-liners.jpg',
+    listingPhotoFile: 'paint-listing/paint-pail-liners.jpg',
   },
   {
     id: 'paint-wooster-brush-3pack',
@@ -83,6 +90,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-wooster-brush-3pack.jpg',
+    listingPhotoFile: 'paint-listing/paint-wooster-brush-3pack.jpg',
   },
   {
     id: 'paint-blue-tape',
@@ -93,6 +101,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-blue-tape.jpg',
+    listingPhotoFile: 'paint-listing/paint-blue-tape.jpg',
   },
   {
     id: 'paint-roller-9-green',
@@ -103,6 +112,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-roller-9-green.jpg',
+    listingPhotoFile: 'paint-listing/paint-roller-9-green.jpg',
   },
   {
     id: 'paint-roller-9-black',
@@ -113,6 +123,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-roller-9-black.jpg',
+    listingPhotoFile: 'paint-listing/paint-roller-9-black.jpg',
   },
   {
     id: 'paint-wooster-mini-covers',
@@ -123,6 +134,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-wooster-mini-covers.jpg',
+    listingPhotoFile: 'paint-listing/paint-wooster-mini-covers.jpg',
   },
   {
     id: 'paint-roller-frame-9',
@@ -133,6 +145,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-roller-frame-9.jpg',
+    listingPhotoFile: 'paint-listing/paint-roller-frame-9.jpg',
   },
   {
     id: 'paint-roller-frame-mini',
@@ -143,8 +156,10 @@ export const PAINT_SEED: PaintSeedSpec[] = [
     location: 'Black closet 4th shelf',
     application: 'Painting',
     photoFile: 'paint/paint-roller-frame-mini.jpg',
+    listingPhotoFile: 'paint-listing/paint-roller-frame-mini.jpg',
   },
 ]
+
 
 async function fetchSeedPhoto(photoFile: string): Promise<Blob | undefined> {
   try {
@@ -174,14 +189,36 @@ function toRecord(spec: PaintSeedSpec, photoCount: number, now: number): ItemRec
   }
 }
 
-/** Insert any missing Black closet 4th shelf painting seed items (does not overwrite existing). */
+const PAINT_LISTING_VERSION = '2'
+const PAINT_LISTING_KEY = 'inventory-paint-listing-version'
+
+/** Insert missing paint items; refresh to dual photos (shelf + listing) when version bumps. */
 export async function seedPaintMissing(adapter: InventoryAdapter): Promise<void> {
   const existing = await adapter.list()
   const byId = new Map(existing.map((item) => [item.id, item]))
   const now = Date.now()
+  const needsListingRefresh =
+    typeof localStorage !== 'undefined' &&
+    localStorage.getItem(PAINT_LISTING_KEY) !== PAINT_LISTING_VERSION
+
   for (const spec of PAINT_SEED) {
-    if (byId.has(spec.id)) continue
-    const photo = await fetchSeedPhoto(spec.photoFile)
-    await adapter.upsert(toRecord(spec, photo ? 1 : 0, now), photo ? [photo] : undefined)
+    const shot = await fetchSeedPhoto(spec.photoFile)
+    const listing = await fetchSeedPhoto(spec.listingPhotoFile)
+    const photos = [shot, listing]
+    const count = photos.filter(Boolean).length
+    const current = byId.get(spec.id)
+    if (!current) {
+      await adapter.upsert(toRecord(spec, count, now), photos)
+      continue
+    }
+    if (needsListingRefresh || (current.photoCount || 0) < 2) {
+      await adapter.upsert(
+        { ...current, photoCount: count, updatedAt: now },
+        photos,
+      )
+    }
+  }
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem(PAINT_LISTING_KEY, PAINT_LISTING_VERSION)
   }
 }
