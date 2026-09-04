@@ -1,7 +1,7 @@
 import { money } from '../money'
 import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
-import { isLowStock } from '../types'
+import { isLowStock, MAX_PHOTOS } from '../types'
 import { PhotoThumb } from './PhotoThumb'
 
 type ItemCardProps = {
@@ -9,6 +9,14 @@ type ItemCardProps = {
 }
 
 export function ItemCard({ item }: ItemCardProps) {
+  const photoSlots =
+    item.photoCount > 0
+      ? Array.from(
+          { length: Math.min(MAX_PHOTOS, item.photoCount) },
+          (_, i) => i,
+        )
+      : []
+
   return (
     <button
       type="button"
@@ -16,13 +24,38 @@ export function ItemCard({ item }: ItemCardProps) {
       id={`item-card-${item.id}`}
       onClick={() => navigate(`/items/${item.id}`)}
     >
-      <PhotoThumb
-        id={item.id}
-        hasPhoto={item.photoCount > 0}
-        slot={0}
-        alt=""
-        className="item-card-photo"
-      />
+      <div className="item-card-photos" aria-hidden={photoSlots.length === 0}>
+        {photoSlots.length === 0 ? (
+          <PhotoThumb
+            id={item.id}
+            hasPhoto={false}
+            alt=""
+            className="item-card-photo"
+          />
+        ) : (
+          <>
+            <div
+              className={`item-card-photo-strip item-card-photo-strip--${photoSlots.length}`}
+            >
+              {photoSlots.map((slot) => (
+                <PhotoThumb
+                  key={slot}
+                  id={item.id}
+                  hasPhoto
+                  slot={slot}
+                  alt=""
+                  className="item-card-photo"
+                />
+              ))}
+            </div>
+            {item.photoCount > 1 ? (
+              <span className="item-card-photo-count" aria-label={`${item.photoCount} photos`}>
+                {item.photoCount}
+              </span>
+            ) : null}
+          </>
+        )}
+      </div>
       <div className="item-card-body">
         <div className="item-card-name">
           {item.name}

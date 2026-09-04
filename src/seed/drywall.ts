@@ -194,7 +194,11 @@ async function seedOnce(adapter: InventoryAdapter): Promise<void> {
     for (const spec of DRYWALL_SEED) {
       const item = byId.get(spec.id)
       if (!item) continue
-      if (item.photoCount > 0 && !needsPhotoRefresh) continue
+      if (item.photoCount > 0 && !needsPhotoRefresh) {
+        // photoCount can be stale after migrations — re-fetch if blob is gone.
+        const existingPhoto = await adapter.getPhoto(item.id, 0)
+        if (existingPhoto) continue
+      }
       const photo = await fetchSeedPhoto(spec.photoFile)
       if (!photo) continue
       await adapter.upsert({ ...item, photoCount: 1, updatedAt: Date.now() }, [photo])

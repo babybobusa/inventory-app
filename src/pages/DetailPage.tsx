@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Header } from '../components/Header'
 import { PhotoThumb } from '../components/PhotoThumb'
 import { useInventory } from '../hooks/useInventory'
@@ -8,6 +9,34 @@ import { isLowStock, MAX_PHOTOS } from '../types'
 export function DetailPage({ id }: { id: string }) {
   const { getById } = useInventory()
   const item = getById(id)
+  const scrollerRef = useRef<HTMLDivElement>(null)
+  const [photoIndex, setPhotoIndex] = useState(0)
+
+  const slots = item
+    ? Array.from({ length: MAX_PHOTOS }, (_, i) => i).filter((i) => i < item.photoCount)
+    : []
+
+  useEffect(() => {
+    setPhotoIndex(0)
+  }, [id, item?.photoCount])
+
+  useEffect(() => {
+    const el = scrollerRef.current
+    if (!el || slots.length <= 1) return
+
+    const onScroll = () => {
+      const first = el.firstElementChild as HTMLElement | null
+      if (!first) return
+      const row = getComputedStyle(el).flexDirection.startsWith('row')
+      const slide = (row ? first.offsetWidth : first.offsetHeight) + 10
+      const offset = row ? el.scrollLeft : el.scrollTop
+      const i = Math.round(offset / Math.max(slide, 1))
+      setPhotoIndex(Math.max(0, Math.min(slots.length - 1, i)))
+    }
+
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [slots.length])
 
   if (!item) {
     return (
@@ -17,10 +46,6 @@ export function DetailPage({ id }: { id: string }) {
       </div>
     )
   }
-
-  const slots = Array.from({ length: MAX_PHOTOS }, (_, i) => i).filter(
-    (i) => i < item.photoCount,
-  )
 
   return (
     <div className="page">
@@ -48,20 +73,28 @@ export function DetailPage({ id }: { id: string }) {
             className="product-photo"
           />
         ) : (
-          <div
-            className={`product-photos${slots.length > 1 ? ' product-photos-multi' : ''}`}
-            id="detail-photos"
-          >
-            {slots.map((slot) => (
-              <PhotoThumb
-                key={slot}
-                id={item.id}
-                hasPhoto
-                slot={slot}
-                alt={`${item.name} photo ${slot + 1}`}
-                className="product-photo"
-              />
-            ))}
+          <div className="product-photos-wrap">
+            {slots.length > 1 ? (
+              <p className="detail-photo-count" id="detail-photo-count">
+                Photo {photoIndex + 1} of {slots.length}
+              </p>
+            ) : null}
+            <div
+              ref={scrollerRef}
+              className={`product-photos${slots.length > 1 ? ' product-photos-multi' : ''}`}
+              id="detail-photos"
+            >
+              {slots.map((slot) => (
+                <PhotoThumb
+                  key={slot}
+                  id={item.id}
+                  hasPhoto
+                  slot={slot}
+                  alt={`${item.name} photo ${slot + 1}`}
+                  className="product-photo"
+                />
+              ))}
+            </div>
           </div>
         )}
         <div className="product-fields">
