@@ -2,6 +2,7 @@ import { recommendedPrice } from '../money'
 import type { InventoryAdapter } from '../storage/adapter'
 import type { ItemRecord } from '../types'
 import { seedCloset2Missing } from './closet2'
+import { seedCloset3Missing } from './closet3'
 
 export type SeedSpec = {
   id: string
@@ -222,6 +223,7 @@ export async function ensureSeeded(adapter: InventoryAdapter): Promise<void> {
     seedLock = (async () => {
       await seedOnce(adapter)
       await seedCloset2Missing(adapter)
+      await seedCloset3Missing(adapter)
     })().catch((err) => {
       seedLock = null
       throw err
