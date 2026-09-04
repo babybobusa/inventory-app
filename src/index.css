@@ -687,3 +687,142 @@ button {
     flex: 1;
   }
 }
+
+/* Low stock alerts */
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.alerts-wrap {
+  position: relative;
+}
+
+.alerts-btn {
+  position: relative;
+}
+
+.alerts-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #dc2626;
+  box-shadow: 0 0 0 2px var(--card);
+}
+
+.alerts-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 40;
+  width: min(320px, calc(100vw - 24px));
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.alerts-panel-head {
+  padding: 12px 14px 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.alerts-empty {
+  margin: 0;
+  padding: 12px 14px 16px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.alerts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 320px;
+  overflow: auto;
+}
+
+.alerts-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: transparent;
+  text-align: left;
+  padding: 12px 14px;
+  min-height: var(--tap);
+}
+
+.alerts-item:active {
+  background: #eef3f1;
+}
+
+.alerts-item-name {
+  font-weight: 650;
+  font-size: 0.92rem;
+}
+
+.alerts-item-meta {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.chip-low {
+  background: #fef2f2;
+  color: #b42318;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.item-card-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 0;
+}
+
+.product-name .chip-low {
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+
+.low-stock-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f8faf9;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 0 !important;
+}
+
+.toggle-row input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  min-height: 22px;
+  accent-color: var(--accent);
+}
+
+.low-stock-fields input:disabled {
+  opacity: 0.55;
+  background: #eef3f1;
+}

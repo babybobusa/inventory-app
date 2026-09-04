@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState, type ChangeEvent } from 'react'
+import { AlertsMenu } from '../components/AlertsMenu'
 import { Header } from '../components/Header'
 import { ItemCard } from '../components/ItemCard'
 import { useInventory } from '../hooks/useInventory'
@@ -100,16 +101,19 @@ export function ListPage() {
       <Header
         title="Inventory"
         right={
-          <button
-            type="button"
-            id="btn-menu"
-            name="menu"
-            className="icon-btn"
-            aria-label="More actions"
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            ⋯
-          </button>
+          <>
+            <AlertsMenu items={items} />
+            <button
+              type="button"
+              id="btn-menu"
+              name="menu"
+              className="icon-btn"
+              aria-label="More actions"
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              ⋯
+            </button>
+          </>
         }
       />
 

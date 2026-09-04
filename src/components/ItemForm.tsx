@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from '
 import { money, recommendedPrice } from '../money'
 import type { PhotosChange } from '../storage/adapter'
 import type { ItemDraft, ItemRecord } from '../types'
-import { MAX_PHOTOS } from '../types'
+import { DEFAULT_LOW_STOCK_THRESHOLD, MAX_PHOTOS } from '../types'
 import { PhotoThumb } from './PhotoThumb'
 
 type ItemFormProps = {
@@ -39,6 +39,12 @@ export function ItemForm({
   const [cost, setCost] = useState(initial ? String(initial.cost) : '')
   const [location, setLocation] = useState(initial?.location ?? 'TBD')
   const [application, setApplication] = useState(initial?.application ?? '')
+  const [lowStockAlertEnabled, setLowStockAlertEnabled] = useState(
+    initial?.lowStockAlertEnabled ?? false,
+  )
+  const [lowStockThreshold, setLowStockThreshold] = useState(
+    String(initial?.lowStockThreshold ?? DEFAULT_LOW_STOCK_THRESHOLD),
+  )
   const [slots, setSlots] = useState<SlotDraft[]>(emptySlots)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -106,6 +112,8 @@ export function ItemForm({
           cost: Number(cost) || 0,
           location,
           application,
+          lowStockAlertEnabled,
+          lowStockThreshold: Number(lowStockThreshold) || 0,
         },
         photos,
       )
@@ -296,6 +304,31 @@ export function ItemForm({
           <option key={app} value={app} />
         ))}
       </datalist>
+
+      <div className="low-stock-fields">
+        <label className="toggle-row" htmlFor="item-low-stock-alert">
+          <span>Low stock alert</span>
+          <input
+            id="item-low-stock-alert"
+            name="lowStockAlert"
+            type="checkbox"
+            checked={lowStockAlertEnabled}
+            onChange={(e) => setLowStockAlertEnabled(e.target.checked)}
+          />
+        </label>
+        <label htmlFor="item-low-stock-threshold">Alert when quantity is at or below</label>
+        <input
+          id="item-low-stock-threshold"
+          name="lowStockThreshold"
+          type="number"
+          inputMode="numeric"
+          min={0}
+          step="any"
+          value={lowStockThreshold}
+          disabled={!lowStockAlertEnabled}
+          onChange={(e) => setLowStockThreshold(e.target.value)}
+        />
+      </div>
 
       {error ? <p className="form-error">{error}</p> : null}
 

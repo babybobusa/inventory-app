@@ -110,6 +110,11 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
         location: draft.location.trim() || 'TBD',
         application: draft.application.trim(),
         photoCount,
+        lowStockAlertEnabled: Boolean(draft.lowStockAlertEnabled),
+        lowStockThreshold:
+          Number.isFinite(Number(draft.lowStockThreshold)) && Number(draft.lowStockThreshold) >= 0
+            ? Number(draft.lowStockThreshold)
+            : 2,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
       }

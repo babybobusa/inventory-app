@@ -3,7 +3,7 @@ import { PhotoThumb } from '../components/PhotoThumb'
 import { useInventory } from '../hooks/useInventory'
 import { money } from '../money'
 import { navigate } from '../nav'
-import { MAX_PHOTOS } from '../types'
+import { isLowStock, MAX_PHOTOS } from '../types'
 
 export function DetailPage({ id }: { id: string }) {
   const { getById } = useInventory()
@@ -67,6 +67,11 @@ export function DetailPage({ id }: { id: string }) {
         <div className="product-fields">
           <h2 className="product-name" id="detail-name">
             {item.name}
+            {isLowStock(item) ? (
+              <span className="chip chip-low" id="detail-low-badge">
+                Low
+              </span>
+            ) : null}
           </h2>
           {item.description ? (
             <p className="product-desc" id="detail-description">
@@ -93,6 +98,14 @@ export function DetailPage({ id }: { id: string }) {
             <div>
               <dt>Application</dt>
               <dd id="detail-application">{item.application || '—'}</dd>
+            </div>
+            <div>
+              <dt>Low stock alert</dt>
+              <dd id="detail-low-stock">
+                {item.lowStockAlertEnabled
+                  ? `On — at or below ${item.lowStockThreshold}`
+                  : 'Off'}
+              </dd>
             </div>
           </dl>
         </div>

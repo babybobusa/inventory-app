@@ -1,5 +1,10 @@
 import type { ExportPayload, ItemRecord } from '../types'
-import { MAX_PHOTOS, normalizePhotoCount } from '../types'
+import {
+  MAX_PHOTOS,
+  normalizeLowStockEnabled,
+  normalizeLowStockThreshold,
+  normalizePhotoCount,
+} from '../types'
 import type { InventoryAdapter, PhotosChange } from './adapter'
 
 const DB_NAME = 'inventory-app'
@@ -72,6 +77,8 @@ function normalizeItem(raw: ItemRecord & { hasPhoto?: boolean }): ItemRecord {
     location: raw.location,
     application: raw.application,
     photoCount: normalizePhotoCount(raw),
+    lowStockAlertEnabled: normalizeLowStockEnabled(raw),
+    lowStockThreshold: normalizeLowStockThreshold(raw),
     createdAt: raw.createdAt,
     updatedAt: raw.updatedAt,
   }
@@ -261,6 +268,8 @@ export function createIndexedDbAdapter(): InventoryAdapter {
           location: typeof row.location === 'string' ? row.location : 'TBD',
           application: typeof row.application === 'string' ? row.application : '',
           photoCount,
+          lowStockAlertEnabled: normalizeLowStockEnabled(row),
+          lowStockThreshold: normalizeLowStockThreshold(row),
           createdAt: Number(row.createdAt) || Date.now(),
           updatedAt: Date.now(),
         }

@@ -1,6 +1,7 @@
 import { money } from '../money'
 import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
+import { isLowStock } from '../types'
 import { PhotoThumb } from './PhotoThumb'
 
 type ItemCardProps = {
@@ -23,7 +24,14 @@ export function ItemCard({ item }: ItemCardProps) {
         className="item-card-photo"
       />
       <div className="item-card-body">
-        <div className="item-card-name">{item.name}</div>
+        <div className="item-card-name">
+          {item.name}
+          {isLowStock(item) ? (
+            <span className="chip chip-low" id={`item-low-badge-${item.id}`}>
+              Low
+            </span>
+          ) : null}
+        </div>
         <div className="item-card-meta">
           <span>Qty {item.quantity}</span>
           <span>{money(item.cost)}</span>

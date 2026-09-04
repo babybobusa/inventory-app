@@ -1,4 +1,4 @@
-const CACHE = 'inventory-app-v3'
+const CACHE = 'inventory-app-v4'
 const BASE = self.registration.scope
 
 self.addEventListener('install', (event) => {

@@ -37,7 +37,8 @@ It will look like a regular app.
 - Filter or group by **location** or **application**.
 - Tap an item to see the big card (photo gallery on top / left, details below). Each item can have up to 3 photos.
 - Tap the big **+** button to add something (`/add`).
-- Edit or delete from an item's page. On add/edit you can attach **up to 3 photos**.
+- Edit or delete from an item's page. On add/edit you can attach **up to 3 photos**, and turn on a **low stock alert** with a quantity threshold.
+- The warning icon in the header lists low-stock alerts. A red dot means there is something new to check.
 - The three dots let you **export** a backup file or **import** one.
 
 New items default location to **TBD**. The starter drywall set uses
@@ -75,6 +76,8 @@ Use these stable `id` / `name` attributes. Do not rename them.
 | Recommended price (read only) | `item-recommended-price` | `recommendedPrice` |
 | Location | `item-location` | `location` |
 | Application | `item-application` | `application` |
+| Low stock alert (toggle) | `item-low-stock-alert` | `lowStockAlert` |
+| Low stock threshold | `item-low-stock-threshold` | `lowStockThreshold` |
 | Save | `item-save` | `save` |
 | Cancel | `item-cancel` | `cancel` |
 | Delete (edit only) | `item-delete` | `delete` |
@@ -97,8 +100,18 @@ Suggestion lists: `#location-options`, `#application-options`.
 | `photoDataUrls` | string array of data-URLs, **max 3** (preferred for multi-photo import) |
 | `photoDataUrl` | legacy single data-URL → becomes photo 1 |
 | `hasPhoto` | legacy boolean; treated as one photo when `photoCount` is missing |
+| `lowStockAlertEnabled` | boolean — alert toggle |
+| `lowStockThreshold` | number — alert when quantity ≤ this (default `2`) |
 
-Prefer `photoDataUrls` on import (trim to 3). Export writes `photoDataUrls`, plus `photoDataUrl` (first) and `hasPhoto` for older readers. Backup `version` stays `1`.
+Prefer `photoDataUrls` on import (trim to 3). Export writes `photoDataUrls`, plus `photoDataUrl` (first) and `hasPhoto` for older readers. Backup `version` stays `1`. Export/import also include `lowStockAlertEnabled` and `lowStockThreshold`.
+
+**Low stock alert (Data Dov):**
+
+- An item is alerting when `lowStockAlertEnabled && quantity <= lowStockThreshold`.
+- Toggle: `#item-low-stock-alert` (`name`=`lowStockAlert`).
+- Threshold: `#item-low-stock-threshold` (`name`=`lowStockThreshold`, `type=number`, `min=0`). Shown/enabled when the toggle is on.
+- Labels: “Low stock alert” and “Alert when quantity is at or below”.
+- List/detail show a subtle **Low** badge on alerting items (`#item-low-badge-<id>`, `#detail-low-badge`).
 
 ### List page (`/`)
 
@@ -109,11 +122,16 @@ Prefer `photoDataUrls` on import (trim to 3). Export writes `photoDataUrls`, plu
 | Application filter | `filter-application` | `application` |
 | Group by | `group-by` | `groupBy` |
 | Add button | `btn-add` | `add` |
+| Alerts button | `btn-alerts` | `alerts` |
+| Alerts red dot | `alerts-dot` | |
+| Alerts panel | `alerts-panel` | |
 | More menu | `btn-menu` | `menu` |
 | Export | `btn-export` | `export` |
 | Import | `btn-import` | `import` |
 | Import file | `import-file` | `importFile` |
 | Item count | `item-count` | |
+
+Alerts: `#btn-alerts` opens `#alerts-panel`. Red `#alerts-dot` shows for new/active low-stock alerts until the panel is opened (seen ids stored in `localStorage` key `inventory-alerts-seen-ids`). Empty copy: **No low stock alerts**. Each row links to the item detail.
 
 Each row: `#item-card-<item-id>`.
 
