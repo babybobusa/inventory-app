@@ -17,7 +17,8 @@ export function ItemCard({ item }: ItemCardProps) {
     >
       <PhotoThumb
         id={item.id}
-        hasPhoto={item.hasPhoto}
+        hasPhoto={item.photoCount > 0}
+        slot={0}
         alt=""
         className="item-card-photo"
       />

@@ -11,8 +11,9 @@ import {
 import { recommendedPrice } from '../money'
 import { ensureSeeded } from '../seed/drywall'
 import { inventoryDb } from '../storage/indexeddb'
-import type { PhotoChange } from '../storage/adapter'
+import type { PhotosChange } from '../storage/adapter'
 import type { ItemDraft, ItemRecord } from '../types'
+import { MAX_PHOTOS } from '../types'
 
 type InventoryContextValue = {
   items: ItemRecord[]
@@ -20,13 +21,35 @@ type InventoryContextValue = {
   error: string | null
   refresh: () => Promise<void>
   getById: (id: string) => ItemRecord | undefined
-  save: (draft: ItemDraft, opts: { id?: string; photo?: PhotoChange; hasPhoto?: boolean }) => Promise<ItemRecord>
+  save: (
+    draft: ItemDraft,
+    opts: { id?: string; photos?: PhotosChange; photoCount?: number },
+  ) => Promise<ItemRecord>
   remove: (id: string) => Promise<void>
   exportJson: () => Promise<string>
   importJson: (json: string) => Promise<number>
 }
 
 const InventoryContext = createContext<InventoryContextValue | null>(null)
+
+function estimatePhotoCount(
+  existingCount: number,
+  photos: PhotosChange | undefined,
+  override?: number,
+): number {
+  if (typeof override === 'number') {
+    return Math.max(0, Math.min(MAX_PHOTOS, Math.floor(override)))
+  }
+  if (!photos) return existingCount
+  const filled = [false, false, false]
+  for (let i = 0; i < existingCount && i < MAX_PHOTOS; i += 1) filled[i] = true
+  for (let i = 0; i < MAX_PHOTOS; i += 1) {
+    const change = photos[i]
+    if (change instanceof Blob) filled[i] = true
+    else if (change === null) filled[i] = false
+  }
+  return filled.reduce((n, v) => n + (v ? 1 : 0), 0)
+}
 
 export function InventoryProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<ItemRecord[]>([])
@@ -65,13 +88,17 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
   )
 
   const save = useCallback(
-    async (draft: ItemDraft, opts: { id?: string; photo?: PhotoChange; hasPhoto?: boolean }) => {
+    async (
+      draft: ItemDraft,
+      opts: { id?: string; photos?: PhotosChange; photoCount?: number },
+    ) => {
       const now = Date.now()
       const existing = opts.id ? await inventoryDb.get(opts.id) : undefined
-      let hasPhoto = existing?.hasPhoto ?? false
-      if (opts.photo instanceof Blob) hasPhoto = true
-      else if (opts.photo === null) hasPhoto = false
-      if (typeof opts.hasPhoto === 'boolean') hasPhoto = opts.hasPhoto
+      const photoCount = estimatePhotoCount(
+        existing?.photoCount ?? 0,
+        opts.photos,
+        opts.photoCount,
+      )
 
       const item: ItemRecord = {
         id: opts.id ?? crypto.randomUUID(),
@@ -82,13 +109,14 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
         recommendedPrice: recommendedPrice(Number(draft.cost) || 0),
         location: draft.location.trim() || 'TBD',
         application: draft.application.trim(),
-        hasPhoto,
+        photoCount,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
       }
-      await inventoryDb.upsert(item, opts.photo)
+      await inventoryDb.upsert(item, opts.photos)
       await refresh()
-      return item
+      const saved = await inventoryDb.get(item.id)
+      return saved ?? item
     },
     [refresh],
   )

@@ -2,6 +2,7 @@ import { Header } from '../components/Header'
 import { ItemForm } from '../components/ItemForm'
 import { useInventory } from '../hooks/useInventory'
 import { navigate } from '../nav'
+import type { PhotosChange } from '../storage/adapter'
 import type { ItemDraft } from '../types'
 
 export function EditPage({ id }: { id: string }) {
@@ -19,8 +20,8 @@ export function EditPage({ id }: { id: string }) {
     )
   }
 
-  async function onSave(draft: ItemDraft, photo: Blob | null | undefined) {
-    await save(draft, { id, photo })
+  async function onSave(draft: ItemDraft, photos: PhotosChange) {
+    await save(draft, { id, photos })
     navigate(`/items/${id}`)
   }
 

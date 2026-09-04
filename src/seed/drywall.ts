@@ -148,7 +148,7 @@ export const DRYWALL_SEED: SeedSpec[] = [
   },
 ]
 
-function toRecord(spec: SeedSpec, hasPhoto: boolean, now: number): ItemRecord {
+function toRecord(spec: SeedSpec, photoCount: number, now: number): ItemRecord {
   return {
     id: spec.id,
     name: spec.name,
@@ -158,7 +158,7 @@ function toRecord(spec: SeedSpec, hasPhoto: boolean, now: number): ItemRecord {
     recommendedPrice: recommendedPrice(spec.cost),
     location: spec.location,
     application: spec.application,
-    hasPhoto,
+    photoCount,
     createdAt: now,
     updatedAt: now,
   }
@@ -176,26 +176,37 @@ async function fetchSeedPhoto(photoFile: string): Promise<Blob | undefined> {
 
 let seedLock: Promise<void> | null = null
 
+const SEED_PHOTO_VERSION = '2'
+const SEED_PHOTO_VERSION_KEY = 'inventory-seed-photo-version'
+
 async function seedOnce(adapter: InventoryAdapter): Promise<void> {
   const existing = await adapter.list()
   const now = Date.now()
+  const needsPhotoRefresh =
+    typeof localStorage !== 'undefined' &&
+    localStorage.getItem(SEED_PHOTO_VERSION_KEY) !== SEED_PHOTO_VERSION
 
   if (existing.length > 0) {
-    // Backfill seed photos for items that were seeded before photos loaded (404 under BASE_URL).
+    // Backfill missing photos, and refresh when seed photo crops are updated.
     const byId = new Map(existing.map((item) => [item.id, item]))
     for (const spec of DRYWALL_SEED) {
       const item = byId.get(spec.id)
-      if (!item || item.hasPhoto) continue
+      if (!item) continue
+      if (item.photoCount > 0 && !needsPhotoRefresh) continue
       const photo = await fetchSeedPhoto(spec.photoFile)
       if (!photo) continue
-      await adapter.upsert({ ...item, hasPhoto: true, updatedAt: Date.now() }, photo)
+      await adapter.upsert({ ...item, photoCount: 1, updatedAt: Date.now() }, [photo])
     }
+    if (needsPhotoRefresh) localStorage.setItem(SEED_PHOTO_VERSION_KEY, SEED_PHOTO_VERSION)
     return
   }
 
   for (const spec of DRYWALL_SEED) {
     const photo = await fetchSeedPhoto(spec.photoFile)
-    await adapter.upsert(toRecord(spec, Boolean(photo), now), photo)
+    await adapter.upsert(toRecord(spec, photo ? 1 : 0, now), photo ? [photo] : undefined)
+  }
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem(SEED_PHOTO_VERSION_KEY, SEED_PHOTO_VERSION)
   }
 }
 
