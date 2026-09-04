@@ -32,7 +32,7 @@ It will look like a regular app.
 
 ## What you can do
 
-- Scroll the list. Each row shows up to **3** photo thumbnails, name, quantity, cost, the 20% markup price, location, and application.
+- Browse a dense **2–3 column photo grid**. Each card shows the **primary** photo (slot 0), name, quantity, cost / recommended markup, a short description, and location. Extra photos show as a tiny **+N** badge — open the item for the full gallery.
 - Search the box at the top (name, notes, location, application).
 - Filter or group by **location** or **application**.
 - Tap an item to see the big card (photo gallery on top / left, details below). Each item can have up to 3 photos.
@@ -90,7 +90,7 @@ Suggestion lists: `#location-options`, `#application-options`.
 - Upload with `#item-photo-1`, `#item-photo-2`, `#item-photo-3` (`name` = `photo1` / `photo2` / `photo3`, `accept="image/*"`).
 - Clear with `#item-clear-photo-1` / `#item-clear-photo-2` / `#item-clear-photo-3`.
 - Cap message: `#item-photo-cap` (always) and `#item-photo-limit-message` when a 4th photo is attempted. Plain text: **You can add up to 3 photos per item.**
-- List row shows up to 3 thumbnails (slots 1–3). Detail gallery = `#detail-photos` with `#detail-photo-count` (“Photo N of M”) when there is more than one photo.
+- List card shows **only photo slot 0** (optional `+N` badge if more photos). Detail gallery = `#detail-photos` with `#detail-photo-count` (“Photo N of M”) when there is more than one photo.
 - Legacy `#item-photo` is gone — always use the numbered slots.
 
 **Import / export JSON photos (Data Dov):**
@@ -131,6 +131,7 @@ Prefer `photoDataUrls` on import (trim to 3). Export writes `photoDataUrls`, plu
 | Import | `btn-import` | `import` |
 | Import file | `import-file` | `importFile` |
 | Item count | `item-count` | |
+| Filtered summary | `list-summary` (`list-summary-qty`, `list-summary-total`) | |
 
 Alerts: `#btn-alerts` opens `#alerts-panel`. Red `#alerts-dot` shows for new/active low-stock alerts until the panel is opened (seen ids stored in `localStorage` key `inventory-alerts-seen-ids`). Empty copy: **No low stock alerts**. Each row links to the item detail.
 

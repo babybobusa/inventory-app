@@ -3,6 +3,7 @@ import { AlertsMenu } from '../components/AlertsMenu'
 import { Header } from '../components/Header'
 import { ItemCard } from '../components/ItemCard'
 import { useInventory } from '../hooks/useInventory'
+import { money } from '../money'
 import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
 
@@ -47,6 +48,16 @@ export function ListPage() {
       return true
     })
   }, [items, query, location, application])
+
+  const filteredTotals = useMemo(() => {
+    let qty = 0
+    let cost = 0
+    for (const item of filtered) {
+      qty += item.quantity
+      cost += item.cost * item.quantity
+    }
+    return { qty, cost }
+  }, [filtered])
 
   const groups = useMemo(() => {
     if (groupBy === 'none') {
@@ -218,15 +229,25 @@ export function ListPage() {
                 <span>{group.items.length}</span>
               </h2>
             ) : null}
-            {group.items.map((item) => (
-              <ItemCard key={item.id} item={item} />
-            ))}
+            <div className="goods-grid">
+              {group.items.map((item) => (
+                <ItemCard key={item.id} item={item} />
+              ))}
+            </div>
           </section>
         ))}
         {filtered.length === 0 ? (
           <p className="empty">No items match. Try a different search or add a new item.</p>
         ) : null}
       </div>
+
+      {filtered.length > 0 ? (
+        <div className="summary-bar" id="list-summary">
+          <span id="list-summary-qty">Qty: {filteredTotals.qty}</span>
+          <span className="summary-sep">|</span>
+          <span id="list-summary-total">Total: {money(filteredTotals.cost)}</span>
+        </div>
+      ) : null}
 
       <button
         type="button"

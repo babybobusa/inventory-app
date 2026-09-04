@@ -1,7 +1,7 @@
 import { money } from '../money'
 import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
-import { isLowStock, MAX_PHOTOS } from '../types'
+import { isLowStock } from '../types'
 import { PhotoThumb } from './PhotoThumb'
 
 type ItemCardProps = {
@@ -9,13 +9,8 @@ type ItemCardProps = {
 }
 
 export function ItemCard({ item }: ItemCardProps) {
-  const photoSlots =
-    item.photoCount > 0
-      ? Array.from(
-          { length: Math.min(MAX_PHOTOS, item.photoCount) },
-          (_, i) => i,
-        )
-      : []
+  const hasPhoto = item.photoCount > 0
+  const extraPhotos = Math.max(0, item.photoCount - 1)
 
   return (
     <button
@@ -24,56 +19,42 @@ export function ItemCard({ item }: ItemCardProps) {
       id={`item-card-${item.id}`}
       onClick={() => navigate(`/items/${item.id}`)}
     >
-      <div className="item-card-photos" aria-hidden={photoSlots.length === 0}>
-        {photoSlots.length === 0 ? (
-          <PhotoThumb
-            id={item.id}
-            hasPhoto={false}
-            alt=""
-            className="item-card-photo"
-          />
-        ) : (
-          <>
-            <div
-              className={`item-card-photo-strip item-card-photo-strip--${photoSlots.length}`}
-            >
-              {photoSlots.map((slot) => (
-                <PhotoThumb
-                  key={slot}
-                  id={item.id}
-                  hasPhoto
-                  slot={slot}
-                  alt=""
-                  className="item-card-photo"
-                />
-              ))}
-            </div>
-            {item.photoCount > 1 ? (
-              <span className="item-card-photo-count" aria-label={`${item.photoCount} photos`}>
-                {item.photoCount}
-              </span>
-            ) : null}
-          </>
-        )}
+      <div className="item-card-photos" aria-hidden={!hasPhoto}>
+        <PhotoThumb
+          id={item.id}
+          hasPhoto={hasPhoto}
+          slot={0}
+          alt=""
+          className="item-card-photo"
+        />
+        {extraPhotos > 0 ? (
+          <span
+            className="item-card-photo-count"
+            aria-label={`${item.photoCount} photos`}
+          >
+            +{extraPhotos}
+          </span>
+        ) : null}
       </div>
       <div className="item-card-body">
         <div className="item-card-name">
-          {item.name}
+          <span className="item-card-name-text">{item.name}</span>
           {isLowStock(item) ? (
             <span className="chip chip-low" id={`item-low-badge-${item.id}`}>
               Low
             </span>
           ) : null}
         </div>
-        <div className="item-card-meta">
-          <span>Qty {item.quantity}</span>
-          <span>{money(item.cost)}</span>
+        <div className="item-card-qty">Qty {item.quantity}</div>
+        <div className="item-card-prices">
+          <span className="item-card-cost">{money(item.cost)}</span>
+          <span className="item-card-sep"> / </span>
           <span className="markup">{money(item.recommendedPrice)}</span>
         </div>
-        <div className="item-card-tags">
-          <span className="chip">{item.location || 'TBD'}</span>
-          {item.application ? <span className="chip chip-alt">{item.application}</span> : null}
-        </div>
+        {item.description ? (
+          <div className="item-card-desc">{item.description}</div>
+        ) : null}
+        <div className="item-card-location">{item.location || 'TBD'}</div>
       </div>
     </button>
   )
