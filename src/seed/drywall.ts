@@ -164,20 +164,37 @@ function toRecord(spec: SeedSpec, hasPhoto: boolean, now: number): ItemRecord {
   }
 }
 
+async function fetchSeedPhoto(photoFile: string): Promise<Blob | undefined> {
+  try {
+    const res = await fetch(`${import.meta.env.BASE_URL}seed-photos/${photoFile}`)
+    if (res.ok) return await res.blob()
+  } catch {
+    // ignore network / 404
+  }
+  return undefined
+}
+
 let seedLock: Promise<void> | null = null
 
 async function seedOnce(adapter: InventoryAdapter): Promise<void> {
   const existing = await adapter.list()
-  if (existing.length > 0) return
   const now = Date.now()
-  for (const spec of DRYWALL_SEED) {
-    let photo: Blob | undefined
-    try {
-      const res = await fetch(`/seed-photos/${spec.photoFile}`)
-      if (res.ok) photo = await res.blob()
-    } catch {
-      photo = undefined
+
+  if (existing.length > 0) {
+    // Backfill seed photos for items that were seeded before photos loaded (404 under BASE_URL).
+    const byId = new Map(existing.map((item) => [item.id, item]))
+    for (const spec of DRYWALL_SEED) {
+      const item = byId.get(spec.id)
+      if (!item || item.hasPhoto) continue
+      const photo = await fetchSeedPhoto(spec.photoFile)
+      if (!photo) continue
+      await adapter.upsert({ ...item, hasPhoto: true, updatedAt: Date.now() }, photo)
     }
+    return
+  }
+
+  for (const spec of DRYWALL_SEED) {
+    const photo = await fetchSeedPhoto(spec.photoFile)
     await adapter.upsert(toRecord(spec, Boolean(photo), now), photo)
   }
 }
