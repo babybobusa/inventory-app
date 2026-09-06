@@ -85,9 +85,9 @@ export const DRYWALL_SEED: SeedSpec[] = [
   },
   {
     id: 'seed-3m-80-sheets',
-    name: '3M Drywall Sanding Sheets 80 Grit (25-Pack)',
+    name: '3M Drywall Sanding Sheets 80 Grit (100-Pack)',
     description:
-      '3M coarse 80 grit drywall sanding sheets, approx 4-3/16" x 11-1/4", package marked 25 sheets. Fits hand sanders.',
+      '3M Contractor Grade coarse 80 grit drywall pole sanding sheets, approx 4-3/16" x 11-1/4", package marked 100 sheets. Fits hand/pole sanders.',
     quantity: 1,
     cost: 18.0,
     location: 'top shelf of black closet',
@@ -184,7 +184,7 @@ async function fetchSeedPhoto(photoFile: string): Promise<Blob | undefined> {
 
 let seedLock: Promise<void> | null = null
 
-const SEED_PHOTO_VERSION = '4'
+const SEED_PHOTO_VERSION = '5'
 const SEED_PHOTO_VERSION_KEY = 'inventory-seed-photo-version'
 
 async function seedOnce(adapter: InventoryAdapter): Promise<void> {
