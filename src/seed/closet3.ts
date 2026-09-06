@@ -17,10 +17,10 @@ export type Closet3SeedSpec = {
 export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-andersen-spring',
-    name: "(Andersen) screen door tension spring",
-    description: "Andersen screen door tension spring; used to hold screen",
+    name: "Andersen-compatible screen door tension spring",
+    description: "Prime-Line 4 in sliding screen door top tension spring, Andersen-compatible (2-pack listing; stock 1 spring)",
     quantity: 1,
-    cost: 5.0,
+    cost: 6.72,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-andersen-spring.jpg',
@@ -28,10 +28,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-screen-spline',
-    name: "ADFORS .125 x 25 ft screen spline",
-    description: "ADFORS black screen spline .125 in x 25 ft (package marks .125 in)",
+    name: "Phifer .125 x 25 ft black screen spline",
+    description: "Phifer 0.125 in x 25 ft black vinyl screen spline",
     quantity: 2,
-    cost: 15.0,
+    cost: 4.98,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-screen-spline.jpg',
@@ -39,10 +39,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-wire-12-3',
-    name: "12/3 wire",
-    description: "12/3 electrical wire, about 10 ft",
+    name: "12/3 NM-B wire remnant (~10 ft)",
+    description: "Yellow 12/3 NM-B electrical cable remnant, about 10 ft; value from Home Depot per-foot pricing",
     quantity: 1,
-    cost: 2.0,
+    cost: 19.8,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-wire-12-3.jpg',
@@ -50,10 +50,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-wire-14-3',
-    name: "14/3 wire",
-    description: "14/3 electrical wire, about 125 ft",
+    name: "14/3 NM-B wire remnant (~125 ft)",
+    description: "Blue 14/3 NM-B electrical cable remnant, about 125 ft; value from Home Depot per-foot pricing",
     quantity: 1,
-    cost: 1.5,
+    cost: 98.75,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-wire-14-3.jpg',
@@ -61,10 +61,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-gfci-15a',
-    name: "15 amp GFCI outlet",
-    description: "Leviton 15 amp tamper-resistant GFCI outlet",
+    name: "Leviton 15A tamper-resistant GFCI outlet",
+    description: "Leviton SmartlockPro 15 Amp 125V self-test tamper-resistant GFCI outlet, white",
     quantity: 1,
-    cost: 12.0,
+    cost: 21.4,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-gfci-15a.jpg',
@@ -72,10 +72,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-outlet-15a-tr',
-    name: "15 amp outlet (tamper resistant)",
-    description: "15 amp tamper-resistant duplex outlet",
+    name: "15 amp tamper-resistant duplex outlet",
+    description: "Leviton 15 Amp 125V tamper-resistant duplex outlet, white",
     quantity: 1,
-    cost: 5.0,
+    cost: 1.5,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-outlet-15a-tr.jpg',
@@ -83,10 +83,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-outlet-15a',
-    name: "15 amp outlet",
-    description: "15 amp duplex outlet",
+    name: "15 amp duplex outlet",
+    description: "Standard 15 Amp duplex receptacle, white",
     quantity: 1,
-    cost: 3.5,
+    cost: 1.28,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-outlet-15a.jpg',
@@ -94,10 +94,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-ceiling-box-4in',
-    name: "4 in new work ceiling box",
-    description: "4 inch new-work round plastic ceiling box",
+    name: "4 in new work PVC ceiling box",
+    description: "Carlon 4 in 20 cu in PVC new-work electrical ceiling box",
     quantity: 2,
-    cost: 3.5,
+    cost: 2.48,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-ceiling-box-4in.jpg',
@@ -105,10 +105,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-double-blank',
-    name: "Double gang blank wallplate",
-    description: "White double-gang blank wall plate",
+    name: "Double gang blank wall plate",
+    description: "White 2-gang blank thermoplastic wall plate",
     quantity: 1,
-    cost: 5.0,
+    cost: 1.48,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-double-blank.jpg',
@@ -116,10 +116,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-screen-closer',
-    name: "Heavy duty screen door closer",
-    description: "Heavy duty pneumatic screen door closer",
+    name: "Heavy duty pneumatic screen door closer",
+    description: "Wright Products heavy duty pneumatic screen and storm door closer, black",
     quantity: 1,
-    cost: 35.0,
+    cost: 14.34,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-screen-closer.jpg',
@@ -127,10 +127,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-hinge-light',
-    name: "Hinge (light duty)",
-    description: "Light duty square corner hinge",
+    name: "Light duty door hinge",
+    description: "Light duty square-corner residential door hinge, satin nickel/steel",
     quantity: 7,
-    cost: 2.0,
+    cost: 2.48,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-hinge-light.jpg',
@@ -138,10 +138,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-kwikset-knob',
-    name: "Keyed Kwikset doorknob (exterior)",
-    description: "Keyed Kwikset exterior doorknob set",
+    name: "Kwikset keyed exterior doorknob",
+    description: "Kwikset keyed entry exterior doorknob with SmartKey (typical entry knob)",
     quantity: 1,
-    cost: 15.0,
+    cost: 35.37,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-kwikset-knob.jpg',
@@ -149,10 +149,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-lv-double',
-    name: "Low voltage double gang",
+    name: "Low voltage double gang bracket",
     description: "Orange low-voltage double-gang mounting bracket",
     quantity: 1,
-    cost: 5.0,
+    cost: 2.97,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-lv-double.jpg',
@@ -160,10 +160,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-lv-single',
-    name: "Low voltage single gang",
+    name: "Low voltage single gang bracket",
     description: "Orange low-voltage single-gang mounting bracket",
     quantity: 1,
-    cost: 4.5,
+    cost: 1.97,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-lv-single.jpg',
@@ -172,7 +172,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-misc-doorknob',
     name: "Misc doorknob pieces",
-    description: "Assorted doorknob/door hardware parts",
+    description: "Assorted doorknob and door hardware parts",
     quantity: 0,
     cost: 0.0,
     location: 'Black closet 3rd shelf',
@@ -182,10 +182,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-chandelier-box',
-    name: "Old work chandelier box",
-    description: "Old-work chandelier/ceiling fan support box with brace",
+    name: "Old work chandelier / fan support box",
+    description: "Old-work chandelier and ceiling fan support box with brace",
     quantity: 1,
-    cost: 35.0,
+    cost: 18.97,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-chandelier-box.jpg',
@@ -193,10 +193,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-paddle-switch',
-    name: "Paddle light switch",
-    description: "White paddle/rocker light switch",
+    name: "Paddle / rocker light switch",
+    description: "15 Amp single-pole decorator paddle rocker light switch, white",
     quantity: 1,
-    cost: 5.0,
+    cost: 1.85,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-paddle-switch.jpg',
@@ -207,7 +207,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
     name: "Single gang blank metal wall plate",
     description: "Single-gang blank metal wall plate, primed white",
     quantity: 1,
-    cost: 5.0,
+    cost: 2.48,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-blank-metal.jpg',
@@ -215,10 +215,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-conduit-plate',
-    name: "Single gang conduit plate",
-    description: "Single-gang metal conduit cover plate",
+    name: "Single gang conduit cover plate",
+    description: "Single-gang metal conduit / blank cover plate",
     quantity: 1,
-    cost: 3.5,
+    cost: 1.98,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-conduit-plate.jpg',
@@ -226,10 +226,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-switch-outlet-cover',
-    name: "Single gang light switch/outlet cover",
-    description: "Single-gang decorator/GFCI style wall plate",
+    name: "Single gang decorator / GFCI wall plate",
+    description: "Single-gang decorator or GFCI-style wall plate, white",
     quantity: 1,
-    cost: 2.5,
+    cost: 0.98,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-switch-outlet-cover.jpg',
@@ -237,10 +237,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-outlet-cover',
-    name: "Single gang outlet cover (standard)",
-    description: "Standard duplex outlet wall plate",
+    name: "Single gang duplex outlet cover",
+    description: "Standard single-gang duplex outlet wall plate, white",
     quantity: 2,
-    cost: 3.5,
+    cost: 0.78,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-outlet-cover.jpg',
@@ -248,10 +248,10 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-toggle-cover',
-    name: "Single gang standard light switch cover",
-    description: "Standard single-gang toggle switch wall plate",
+    name: "Single gang toggle switch cover",
+    description: "Standard single-gang toggle switch wall plate, white",
     quantity: 4,
-    cost: 2.0,
+    cost: 0.68,
     location: 'Black closet 3rd shelf',
     application: 'Hardware / electrical & door hardware',
     photoFile: 'closet3/closet3-toggle-cover.jpg',
@@ -259,8 +259,8 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   },
   {
     id: 'closet3-wire-fish',
-    name: "Wire fish",
-    description: "Wire fishing tool (fish tape)",
+    name: "Wire fish tape",
+    description: "Wire fishing tool / fish tape",
     quantity: 0,
     cost: 0.0,
     location: 'Black closet 3rd shelf',
@@ -269,6 +269,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
     listingPhotoFile: 'closet3-listing/closet3-wire-fish.jpg',
   },
 ]
+
 
 async function fetchSeedPhoto(photoFile: string): Promise<Blob | undefined> {
   try {
@@ -298,27 +299,47 @@ function toRecord(spec: Closet3SeedSpec, photoCount: number, now: number): ItemR
   }
 }
 
-/** Insert any missing Black closet 3rd shelf seed items (does not overwrite existing). */
+const CLOSET3_RETAIL_VERSION = '2'
+const CLOSET3_RETAIL_KEY = 'inventory-closet3-retail-version'
+
+/** Insert missing closet3 items; refresh photos + costs away from StoDo when version bumps. */
 export async function seedCloset3Missing(adapter: InventoryAdapter): Promise<void> {
   const existing = await adapter.list()
   const byId = new Map(existing.map((item) => [item.id, item]))
   const now = Date.now()
+  const needsRetailRefresh =
+    typeof localStorage !== 'undefined' &&
+    localStorage.getItem(CLOSET3_RETAIL_KEY) !== CLOSET3_RETAIL_VERSION
+
   for (const spec of CLOSET3_SEED) {
-    const existingItem = byId.get(spec.id)
-    if (existingItem) {
-      if (/cost\s*check/i.test(existingItem.description || "")) {
-        await adapter.upsert({
-          ...existingItem,
-          description: spec.description,
-          updatedAt: Date.now(),
-        })
-      }
-      continue
-    }
     const shot = await fetchSeedPhoto(spec.photoFile)
     const listing = await fetchSeedPhoto(spec.listingPhotoFile)
     const photos = [shot, listing]
     const count = photos.filter(Boolean).length
-    await adapter.upsert(toRecord(spec, count, now), photos)
+    const current = byId.get(spec.id)
+    if (!current) {
+      await adapter.upsert(toRecord(spec, count, now), photos)
+      continue
+    }
+    if (needsRetailRefresh) {
+      await adapter.upsert(
+        {
+          ...current,
+          name: spec.name,
+          description: spec.description,
+          cost: spec.cost,
+          recommendedPrice: recommendedPrice(spec.cost),
+          quantity: spec.quantity,
+          photoCount: count,
+          updatedAt: now,
+        },
+        photos,
+      )
+    } else if (/cost\s*check/i.test(current.description || '')) {
+      await adapter.upsert({ ...current, description: spec.description, updatedAt: now })
+    }
+  }
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem(CLOSET3_RETAIL_KEY, CLOSET3_RETAIL_VERSION)
   }
 }
