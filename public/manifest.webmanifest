@@ -1,6 +1,6 @@
 {
-  "name": "Inventory",
-  "short_name": "Inventory",
+  "name": "Fieldstock",
+  "short_name": "Fieldstock",
   "description": "A simple phone inventory list saved on this device.",
   "start_url": "./",
   "display": "standalone",

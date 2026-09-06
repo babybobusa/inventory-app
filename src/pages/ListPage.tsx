@@ -174,7 +174,7 @@ export function ListPage() {
   return (
     <div className="page">
       <Header
-        title="Inventory"
+        title="Fieldstock"
         right={
           <>
             <AlertsMenu items={items} onResetAlert={resetAlertItem} />
