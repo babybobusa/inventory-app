@@ -9,6 +9,27 @@ import type { ItemRecord } from '../types'
 
 type GroupBy = 'none' | 'location' | 'application'
 type ViewMode = 'items' | 'locations'
+type LayoutMode = 'list' | 'tile'
+
+const LAYOUT_KEY = 'inventory-items-layout'
+
+function readLayout(): LayoutMode {
+  try {
+    const v = localStorage.getItem(LAYOUT_KEY)
+    if (v === 'list' || v === 'tile') return v
+  } catch {
+    /* ignore */
+  }
+  return 'tile'
+}
+
+function writeLayout(mode: LayoutMode) {
+  try {
+    localStorage.setItem(LAYOUT_KEY, mode)
+  } catch {
+    /* ignore */
+  }
+}
 
 function uniqueSorted(values: string[]): string[] {
   return Array.from(new Set(values.filter(Boolean))).sort((a, b) =>
@@ -35,6 +56,7 @@ export function ListPage() {
   const [application, setApplication] = useState('')
   const [groupBy, setGroupBy] = useState<GroupBy>('none')
   const [viewMode, setViewMode] = useState<ViewMode>('items')
+  const [layoutMode, setLayoutMode] = useState<LayoutMode>(() => readLayout())
   const [menuOpen, setMenuOpen] = useState(false)
   const [status, setStatus] = useState<string | null>(null)
   const importRef = useRef<HTMLInputElement>(null)
@@ -144,6 +166,11 @@ export function ListPage() {
 
   const showingLocations = viewMode === 'locations'
 
+  function chooseLayout(mode: LayoutMode) {
+    setLayoutMode(mode)
+    writeLayout(mode)
+  }
+
   return (
     <div className="page">
       <Header
@@ -214,6 +241,38 @@ export function ListPage() {
           Locations
         </button>
       </div>
+
+      {!showingLocations ? (
+        <div
+          className="view-toggle layout-toggle"
+          id="layout-toggle"
+          role="tablist"
+          aria-label="Items layout"
+        >
+          <button
+            type="button"
+            id="view-layout-list"
+            name="layoutList"
+            role="tab"
+            aria-selected={layoutMode === 'list'}
+            className={layoutMode === 'list' ? 'view-tab is-active' : 'view-tab'}
+            onClick={() => chooseLayout('list')}
+          >
+            List
+          </button>
+          <button
+            type="button"
+            id="view-layout-tile"
+            name="layoutTile"
+            role="tab"
+            aria-selected={layoutMode === 'tile'}
+            className={layoutMode === 'tile' ? 'view-tab is-active' : 'view-tab'}
+            onClick={() => chooseLayout('tile')}
+          >
+            Tile
+          </button>
+        </div>
+      ) : null}
 
       <div className="filters">
         <label className="sr-only" htmlFor="search-query">
@@ -355,9 +414,17 @@ export function ListPage() {
                     <span>{group.items.length}</span>
                   </h2>
                 ) : null}
-                <div className="goods-grid">
+                <div
+                  className={
+                    layoutMode === 'list' ? 'goods-list' : 'goods-grid'
+                  }
+                >
                   {group.items.map((item) => (
-                    <ItemCard key={item.id} item={item} />
+                    <ItemCard
+                      key={item.id}
+                      item={item}
+                      layout={layoutMode}
+                    />
                   ))}
                 </div>
               </section>
