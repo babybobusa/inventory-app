@@ -1,7 +1,7 @@
 import { money } from '../money'
 import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
-import { isLowStock } from '../types'
+import { isAlerting, isLowStock } from '../types'
 import { PhotoThumb } from './PhotoThumb'
 
 type ItemCardProps = {
@@ -33,9 +33,9 @@ export function ItemCard({ item, layout = 'tile' }: ItemCardProps) {
         <div className="item-row-body">
           <div className="item-row-top">
             <span className="item-row-name">{item.name}</span>
-            {isLowStock(item) ? (
+            {isAlerting(item) ? (
               <span className="chip chip-low" id={`item-low-badge-${item.id}`}>
-                Low
+                {isLowStock(item) ? 'Low' : 'Due'}
               </span>
             ) : null}
           </div>
@@ -80,9 +80,9 @@ export function ItemCard({ item, layout = 'tile' }: ItemCardProps) {
       <div className="item-card-body">
         <div className="item-card-name">
           <span className="item-card-name-text">{item.name}</span>
-          {isLowStock(item) ? (
+          {isAlerting(item) ? (
             <span className="chip chip-low" id={`item-low-badge-${item.id}`}>
-              Low
+              {isLowStock(item) ? 'Low' : 'Due'}
             </span>
           ) : null}
         </div>

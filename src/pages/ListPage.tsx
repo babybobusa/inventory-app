@@ -50,7 +50,7 @@ function locationKey(value: string): string {
 }
 
 export function ListPage() {
-  const { items, exportJson, importJson } = useInventory()
+  const { items, exportJson, importJson, acknowledgeTimeAlerts } = useInventory()
   const [query, setQuery] = useState('')
   const [location, setLocation] = useState('')
   const [application, setApplication] = useState('')
@@ -177,7 +177,7 @@ export function ListPage() {
         title="Inventory"
         right={
           <>
-            <AlertsMenu items={items} />
+            <AlertsMenu items={items} onAcknowledgeTimeAlerts={acknowledgeTimeAlerts} />
             <button
               type="button"
               id="btn-menu"

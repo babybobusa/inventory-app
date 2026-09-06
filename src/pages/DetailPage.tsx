@@ -4,7 +4,7 @@ import { PhotoThumb } from '../components/PhotoThumb'
 import { useInventory } from '../hooks/useInventory'
 import { money } from '../money'
 import { navigate } from '../nav'
-import { isLowStock, MAX_PHOTOS } from '../types'
+import { isAlerting, isLowStock, MAX_PHOTOS, timeAlertIntervalLabel } from '../types'
 
 export function DetailPage({ id }: { id: string }) {
   const { getById } = useInventory()
@@ -100,9 +100,9 @@ export function DetailPage({ id }: { id: string }) {
         <div className="product-fields">
           <h2 className="product-name" id="detail-name">
             {item.name}
-            {isLowStock(item) ? (
+            {isAlerting(item) ? (
               <span className="chip chip-low" id="detail-low-badge">
-                Low
+                {isLowStock(item) ? 'Low' : 'Due'}
               </span>
             ) : null}
           </h2>
@@ -137,6 +137,14 @@ export function DetailPage({ id }: { id: string }) {
               <dd id="detail-low-stock">
                 {item.lowStockAlertEnabled
                   ? `On — at or below ${item.lowStockThreshold}`
+                  : 'Off'}
+              </dd>
+            </div>
+            <div>
+              <dt>Time reminder</dt>
+              <dd id="detail-time-alert">
+                {item.timeAlertEnabled && item.timeAlertIntervalDays > 0
+                  ? `On — every ${timeAlertIntervalLabel(item.timeAlertIntervalDays)}`
                   : 'Off'}
               </dd>
             </div>

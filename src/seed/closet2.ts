@@ -437,6 +437,9 @@ function toRecord(spec: Closet2SeedSpec, photoCount: number, now: number): ItemR
     photoCount,
     lowStockAlertEnabled: false,
     lowStockThreshold: 2,
+    timeAlertEnabled: false,
+    timeAlertIntervalDays: 0,
+    timeAlertAnchorAt: 0,
     createdAt: now,
     updatedAt: now,
   }

@@ -13,7 +13,7 @@ import { ensureSeeded } from '../seed/drywall'
 import { inventoryDb } from '../storage/indexeddb'
 import type { PhotosChange } from '../storage/adapter'
 import type { ItemDraft, ItemRecord } from '../types'
-import { MAX_PHOTOS } from '../types'
+import { isTimeAlertDue, MAX_PHOTOS } from '../types'
 
 type InventoryContextValue = {
   items: ItemRecord[]
@@ -28,6 +28,8 @@ type InventoryContextValue = {
   remove: (id: string) => Promise<void>
   exportJson: () => Promise<string>
   importJson: (json: string) => Promise<number>
+  /** Reset time-alert anchors for due items (snooze / restart interval). */
+  acknowledgeTimeAlerts: (ids: string[]) => Promise<void>
 }
 
 const InventoryContext = createContext<InventoryContextValue | null>(null)
@@ -115,6 +117,12 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
           Number.isFinite(Number(draft.lowStockThreshold)) && Number(draft.lowStockThreshold) >= 0
             ? Number(draft.lowStockThreshold)
             : 2,
+        timeAlertEnabled: Boolean(draft.timeAlertEnabled),
+        timeAlertIntervalDays:
+          draft.timeAlertEnabled && Number(draft.timeAlertIntervalDays) > 0
+            ? Number(draft.timeAlertIntervalDays)
+            : 0,
+        timeAlertAnchorAt: Number(draft.timeAlertAnchorAt) || 0,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
       }
@@ -130,6 +138,26 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
     async (id: string) => {
       await inventoryDb.remove(id)
       await refresh()
+    },
+    [refresh],
+  )
+
+  const acknowledgeTimeAlerts = useCallback(
+    async (ids: string[]) => {
+      if (!ids.length) return
+      const now = Date.now()
+      let changed = false
+      for (const id of ids) {
+        const existing = await inventoryDb.get(id)
+        if (!existing || !isTimeAlertDue(existing, now)) continue
+        await inventoryDb.upsert({
+          ...existing,
+          timeAlertAnchorAt: now,
+          updatedAt: now,
+        })
+        changed = true
+      }
+      if (changed) await refresh()
     },
     [refresh],
   )
@@ -156,8 +184,20 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
       remove,
       exportJson,
       importJson,
+      acknowledgeTimeAlerts,
     }),
-    [items, loading, error, refresh, getById, save, remove, exportJson, importJson],
+    [
+      items,
+      loading,
+      error,
+      refresh,
+      getById,
+      save,
+      remove,
+      exportJson,
+      importJson,
+      acknowledgeTimeAlerts,
+    ],
   )
 
   return createElement(InventoryContext.Provider, { value }, children)

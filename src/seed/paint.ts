@@ -184,6 +184,9 @@ function toRecord(spec: PaintSeedSpec, photoCount: number, now: number): ItemRec
     photoCount,
     lowStockAlertEnabled: false,
     lowStockThreshold: 2,
+    timeAlertEnabled: false,
+    timeAlertIntervalDays: 0,
+    timeAlertAnchorAt: 0,
     createdAt: now,
     updatedAt: now,
   }

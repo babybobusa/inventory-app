@@ -2,7 +2,12 @@ import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from '
 import { money, recommendedPrice } from '../money'
 import type { PhotosChange } from '../storage/adapter'
 import type { ItemDraft, ItemRecord } from '../types'
-import { DEFAULT_LOW_STOCK_THRESHOLD, MAX_PHOTOS } from '../types'
+import {
+  DEFAULT_LOW_STOCK_THRESHOLD,
+  MAX_PHOTOS,
+  TIME_ALERT_INTERVAL_DAYS,
+  TIME_ALERT_INTERVAL_OPTIONS,
+} from '../types'
 import { PhotoThumb } from './PhotoThumb'
 
 type ItemFormProps = {
@@ -22,6 +27,12 @@ type SlotDraft = {
 
 function emptySlots(): SlotDraft[] {
   return Array.from({ length: MAX_PHOTOS }, () => ({ file: null, removed: false }))
+}
+
+function defaultInterval(initial?: ItemRecord): string {
+  const n = initial?.timeAlertIntervalDays
+  if (n && (TIME_ALERT_INTERVAL_DAYS as readonly number[]).includes(n)) return String(n)
+  return '30'
 }
 
 export function ItemForm({
@@ -45,6 +56,8 @@ export function ItemForm({
   const [lowStockThreshold, setLowStockThreshold] = useState(
     String(initial?.lowStockThreshold ?? DEFAULT_LOW_STOCK_THRESHOLD),
   )
+  const [timeAlertEnabled, setTimeAlertEnabled] = useState(initial?.timeAlertEnabled ?? false)
+  const [timeAlertInterval, setTimeAlertInterval] = useState(defaultInterval(initial))
   const [slots, setSlots] = useState<SlotDraft[]>(emptySlots)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -104,6 +117,27 @@ export function ItemForm({
         else if (slot.removed) photos[i] = null
         else photos[i] = undefined
       }
+
+      let nextTimeEnabled = timeAlertEnabled
+      let nextInterval = Number(timeAlertInterval) || 0
+      let nextAnchor = initial?.timeAlertAnchorAt ?? 0
+
+      if (!nextTimeEnabled) {
+        nextInterval = 0
+        nextAnchor = 0
+      } else {
+        if (!(TIME_ALERT_INTERVAL_DAYS as readonly number[]).includes(nextInterval)) {
+          nextInterval = 30
+        }
+        const wasEnabled = Boolean(initial?.timeAlertEnabled)
+        const prevInterval = Number(initial?.timeAlertIntervalDays) || 0
+        if (!wasEnabled || prevInterval !== nextInterval) {
+          nextAnchor = Date.now()
+        } else if (!nextAnchor) {
+          nextAnchor = Date.now()
+        }
+      }
+
       await onSave(
         {
           name,
@@ -114,6 +148,9 @@ export function ItemForm({
           application,
           lowStockAlertEnabled,
           lowStockThreshold: Number(lowStockThreshold) || 0,
+          timeAlertEnabled: nextTimeEnabled,
+          timeAlertIntervalDays: nextTimeEnabled ? nextInterval : 0,
+          timeAlertAnchorAt: nextAnchor,
         },
         photos,
       )
@@ -306,6 +343,7 @@ export function ItemForm({
       </datalist>
 
       <div className="low-stock-fields">
+        <p className="alerts-section-label">Alerts</p>
         <label className="toggle-row" htmlFor="item-low-stock-alert">
           <span>Low stock alert</span>
           <input
@@ -328,6 +366,31 @@ export function ItemForm({
           disabled={!lowStockAlertEnabled}
           onChange={(e) => setLowStockThreshold(e.target.value)}
         />
+
+        <label className="toggle-row" htmlFor="item-time-alert">
+          <span>Remind me on a schedule</span>
+          <input
+            id="item-time-alert"
+            name="timeAlert"
+            type="checkbox"
+            checked={timeAlertEnabled}
+            onChange={(e) => setTimeAlertEnabled(e.target.checked)}
+          />
+        </label>
+        <label htmlFor="item-time-alert-interval">Remind every</label>
+        <select
+          id="item-time-alert-interval"
+          name="timeAlertInterval"
+          value={timeAlertInterval}
+          disabled={!timeAlertEnabled}
+          onChange={(e) => setTimeAlertInterval(e.target.value)}
+        >
+          {TIME_ALERT_INTERVAL_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
       </div>
 
       {error ? <p className="form-error">{error}</p> : null}

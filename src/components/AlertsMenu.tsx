@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
-import { isLowStock } from '../types'
+import { alertMetaLines, isAlerting, isTimeAlertDue } from '../types'
 
 const SEEN_KEY = 'inventory-alerts-seen-ids'
 
@@ -27,14 +27,19 @@ function saveSeenIds(ids: string[]) {
 
 type AlertsMenuProps = {
   items: ItemRecord[]
+  onAcknowledgeTimeAlerts?: (ids: string[]) => void | Promise<void>
 }
 
-export function AlertsMenu({ items }: AlertsMenuProps) {
+export function AlertsMenu({ items, onAcknowledgeTimeAlerts }: AlertsMenuProps) {
   const [open, setOpen] = useState(false)
   const [seenIds, setSeenIds] = useState<Set<string>>(() => loadSeenIds())
+  const wasOpen = useRef(false)
 
   const alerting = useMemo(
-    () => items.filter(isLowStock).sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })),
+    () =>
+      items
+        .filter((item) => isAlerting(item))
+        .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })),
     [items],
   )
 
@@ -50,6 +55,16 @@ export function AlertsMenu({ items }: AlertsMenuProps) {
     setSeenIds(new Set(ids))
   }, [open, alerting])
 
+  useEffect(() => {
+    if (open && !wasOpen.current) {
+      const timeDueIds = items.filter((item) => isTimeAlertDue(item)).map((item) => item.id)
+      if (timeDueIds.length && onAcknowledgeTimeAlerts) {
+        void onAcknowledgeTimeAlerts(timeDueIds)
+      }
+    }
+    wasOpen.current = open
+  }, [open, items, onAcknowledgeTimeAlerts])
+
   function toggle() {
     setOpen((v) => !v)
   }
@@ -61,7 +76,7 @@ export function AlertsMenu({ items }: AlertsMenuProps) {
         id="btn-alerts"
         name="alerts"
         className="icon-btn alerts-btn"
-        aria-label="Low stock alerts"
+        aria-label="Alerts"
         aria-expanded={open}
         aria-controls="alerts-panel"
         onClick={toggle}
@@ -71,10 +86,10 @@ export function AlertsMenu({ items }: AlertsMenuProps) {
       </button>
       {open ? (
         <div className="alerts-panel" id="alerts-panel" role="menu">
-          <div className="alerts-panel-head">Low stock alerts</div>
+          <div className="alerts-panel-head">Alerts</div>
           {alerting.length === 0 ? (
             <p className="alerts-empty" id="alerts-empty">
-              No low stock alerts
+              No alerts right now
             </p>
           ) : (
             <ul className="alerts-list">
@@ -90,9 +105,7 @@ export function AlertsMenu({ items }: AlertsMenuProps) {
                     }}
                   >
                     <span className="alerts-item-name">{item.name}</span>
-                    <span className="alerts-item-meta">
-                      Qty {item.quantity} · alert at {item.lowStockThreshold}
-                    </span>
+                    <span className="alerts-item-meta">{alertMetaLines(item)}</span>
                   </button>
                 </li>
               ))}

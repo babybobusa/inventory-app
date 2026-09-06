@@ -4,6 +4,9 @@ import {
   normalizeLowStockEnabled,
   normalizeLowStockThreshold,
   normalizePhotoCount,
+  normalizeTimeAlertAnchorAt,
+  normalizeTimeAlertEnabled,
+  normalizeTimeAlertIntervalDays,
 } from '../types'
 import type { InventoryAdapter, PhotosChange } from './adapter'
 
@@ -79,6 +82,9 @@ function normalizeItem(raw: ItemRecord & { hasPhoto?: boolean }): ItemRecord {
     photoCount: normalizePhotoCount(raw),
     lowStockAlertEnabled: normalizeLowStockEnabled(raw),
     lowStockThreshold: normalizeLowStockThreshold(raw),
+    timeAlertEnabled: normalizeTimeAlertEnabled(raw),
+    timeAlertIntervalDays: normalizeTimeAlertIntervalDays(raw),
+    timeAlertAnchorAt: normalizeTimeAlertAnchorAt(raw),
     createdAt: raw.createdAt,
     updatedAt: raw.updatedAt,
   }
@@ -270,6 +276,9 @@ export function createIndexedDbAdapter(): InventoryAdapter {
           photoCount,
           lowStockAlertEnabled: normalizeLowStockEnabled(row),
           lowStockThreshold: normalizeLowStockThreshold(row),
+          timeAlertEnabled: normalizeTimeAlertEnabled(row),
+          timeAlertIntervalDays: normalizeTimeAlertIntervalDays(row),
+          timeAlertAnchorAt: normalizeTimeAlertAnchorAt(row),
           createdAt: Number(row.createdAt) || Date.now(),
           updatedAt: Date.now(),
         }

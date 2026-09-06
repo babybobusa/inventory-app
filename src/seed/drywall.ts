@@ -164,6 +164,9 @@ function toRecord(spec: SeedSpec, photoCount: number, now: number): ItemRecord {
     photoCount,
     lowStockAlertEnabled: false,
     lowStockThreshold: 2,
+    timeAlertEnabled: false,
+    timeAlertIntervalDays: 0,
+    timeAlertAnchorAt: 0,
     createdAt: now,
     updatedAt: now,
   }
