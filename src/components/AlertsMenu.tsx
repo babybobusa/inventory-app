@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
 import { alertMetaLines, isAlerting, isTimeAlertDue } from '../types'
@@ -33,7 +33,6 @@ type AlertsMenuProps = {
 export function AlertsMenu({ items, onAcknowledgeTimeAlerts }: AlertsMenuProps) {
   const [open, setOpen] = useState(false)
   const [seenIds, setSeenIds] = useState<Set<string>>(() => loadSeenIds())
-  const wasOpen = useRef(false)
 
   const alerting = useMemo(
     () =>
@@ -54,16 +53,6 @@ export function AlertsMenu({ items, onAcknowledgeTimeAlerts }: AlertsMenuProps) 
     saveSeenIds(ids)
     setSeenIds(new Set(ids))
   }, [open, alerting])
-
-  useEffect(() => {
-    if (open && !wasOpen.current) {
-      const timeDueIds = items.filter((item) => isTimeAlertDue(item)).map((item) => item.id)
-      if (timeDueIds.length && onAcknowledgeTimeAlerts) {
-        void onAcknowledgeTimeAlerts(timeDueIds)
-      }
-    }
-    wasOpen.current = open
-  }, [open, items, onAcknowledgeTimeAlerts])
 
   function toggle() {
     setOpen((v) => !v)
@@ -93,22 +82,39 @@ export function AlertsMenu({ items, onAcknowledgeTimeAlerts }: AlertsMenuProps) 
             </p>
           ) : (
             <ul className="alerts-list">
-              {alerting.map((item) => (
-                <li key={item.id}>
-                  <button
-                    type="button"
-                    className="alerts-item"
-                    id={`alert-item-${item.id}`}
-                    onClick={() => {
-                      setOpen(false)
-                      navigate(`/items/${item.id}`)
-                    }}
-                  >
-                    <span className="alerts-item-name">{item.name}</span>
-                    <span className="alerts-item-meta">{alertMetaLines(item)}</span>
-                  </button>
-                </li>
-              ))}
+              {alerting.map((item) => {
+                const timeDue = isTimeAlertDue(item)
+                return (
+                  <li key={item.id} className="alerts-item-row">
+                    <button
+                      type="button"
+                      className="alerts-item"
+                      id={`alert-item-${item.id}`}
+                      onClick={() => {
+                        setOpen(false)
+                        navigate(`/items/${item.id}`)
+                      }}
+                    >
+                      <span className="alerts-item-name">{item.name}</span>
+                      <span className="alerts-item-meta">{alertMetaLines(item)}</span>
+                    </button>
+                    {timeDue ? (
+                      <button
+                        type="button"
+                        className="alerts-reset-btn"
+                        id={`alert-reset-${item.id}`}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          e.preventDefault()
+                          void onAcknowledgeTimeAlerts?.([item.id])
+                        }}
+                      >
+                        Reset
+                      </button>
+                    ) : null}
+                  </li>
+                )
+              })}
             </ul>
           )}
         </div>
