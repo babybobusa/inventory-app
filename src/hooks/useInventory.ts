@@ -13,7 +13,7 @@ import { ensureSeeded } from '../seed/drywall'
 import { inventoryDb } from '../storage/indexeddb'
 import type { PhotosChange } from '../storage/adapter'
 import type { ItemDraft, ItemRecord } from '../types'
-import { isTimeAlertDue, MAX_PHOTOS } from '../types'
+import { MAX_PHOTOS } from '../types'
 
 type InventoryContextValue = {
   items: ItemRecord[]
@@ -28,8 +28,17 @@ type InventoryContextValue = {
   remove: (id: string) => Promise<void>
   exportJson: () => Promise<string>
   importJson: (json: string) => Promise<number>
-  /** Reset time-alert anchors for due items (snooze / restart interval). */
-  acknowledgeTimeAlerts: (ids: string[]) => Promise<void>
+  /** Apply alert Reset patch (quantity and/or time alert fields). */
+  resetAlertItem: (
+    id: string,
+    patch: {
+      quantity?: number
+      lowStockAlertEnabled?: boolean
+      timeAlertEnabled?: boolean
+      timeAlertIntervalDays?: number
+      timeAlertAnchorAt?: number
+    },
+  ) => Promise<void>
 }
 
 const InventoryContext = createContext<InventoryContextValue | null>(null)
@@ -142,22 +151,27 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
     [refresh],
   )
 
-  const acknowledgeTimeAlerts = useCallback(
-    async (ids: string[]) => {
-      if (!ids.length) return
+  const resetAlertItem = useCallback(
+    async (
+      id: string,
+      patch: {
+        quantity?: number
+        lowStockAlertEnabled?: boolean
+        timeAlertEnabled?: boolean
+        timeAlertIntervalDays?: number
+        timeAlertAnchorAt?: number
+      },
+    ) => {
+      const existing = await inventoryDb.get(id)
+      if (!existing) return
       const now = Date.now()
-      let changed = false
-      for (const id of ids) {
-        const existing = await inventoryDb.get(id)
-        if (!existing || !isTimeAlertDue(existing, now)) continue
-        await inventoryDb.upsert({
-          ...existing,
-          timeAlertAnchorAt: now,
-          updatedAt: now,
-        })
-        changed = true
+      const next = {
+        ...existing,
+        ...patch,
+        updatedAt: now,
       }
-      if (changed) await refresh()
+      await inventoryDb.upsert(next)
+      await refresh()
     },
     [refresh],
   )
@@ -184,7 +198,7 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
       remove,
       exportJson,
       importJson,
-      acknowledgeTimeAlerts,
+      resetAlertItem,
     }),
     [
       items,
@@ -196,7 +210,7 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
       remove,
       exportJson,
       importJson,
-      acknowledgeTimeAlerts,
+      resetAlertItem,
     ],
   )
 

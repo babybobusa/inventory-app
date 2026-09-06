@@ -1,9 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import { navigate } from '../nav'
 import type { ItemRecord } from '../types'
-import { alertMetaLines, isAlerting, isTimeAlertDue } from '../types'
+import {
+  alertMetaLines,
+  isAlerting,
+  isLowStock,
+  isTimeAlertDue,
+  TIME_ALERT_INTERVAL_DAYS,
+} from '../types'
 
 const SEEN_KEY = 'inventory-alerts-seen-ids'
+const TIME_PROMPT =
+  'Enter days: 15, 30, 45, 90, 180, or 365 — or 0 to turn off'
 
 function loadSeenIds(): Set<string> {
   try {
@@ -25,12 +33,29 @@ function saveSeenIds(ids: string[]) {
   }
 }
 
-type AlertsMenuProps = {
-  items: ItemRecord[]
-  onAcknowledgeTimeAlerts?: (ids: string[]) => void | Promise<void>
+function parseNonNegInt(raw: string | null): number | null {
+  if (raw === null) return null
+  const trimmed = raw.trim()
+  if (trimmed === '') return null
+  const n = Number(trimmed)
+  if (!Number.isFinite(n) || n < 0) return null
+  return Math.floor(n)
 }
 
-export function AlertsMenu({ items, onAcknowledgeTimeAlerts }: AlertsMenuProps) {
+export type AlertResetPatch = {
+  quantity?: number
+  lowStockAlertEnabled?: boolean
+  timeAlertEnabled?: boolean
+  timeAlertIntervalDays?: number
+  timeAlertAnchorAt?: number
+}
+
+type AlertsMenuProps = {
+  items: ItemRecord[]
+  onResetAlert?: (id: string, patch: AlertResetPatch) => void | Promise<void>
+}
+
+export function AlertsMenu({ items, onResetAlert }: AlertsMenuProps) {
   const [open, setOpen] = useState(false)
   const [seenIds, setSeenIds] = useState<Set<string>>(() => loadSeenIds())
 
@@ -58,6 +83,47 @@ export function AlertsMenu({ items, onAcknowledgeTimeAlerts }: AlertsMenuProps) 
     setOpen((v) => !v)
   }
 
+  function handleReset(item: ItemRecord) {
+    const patch: AlertResetPatch = {}
+    let touched = false
+
+    if (isLowStock(item)) {
+      const qty = parseNonNegInt(
+        window.prompt('New quantity', String(item.quantity)),
+      )
+      if (qty === null) {
+        // cancel / empty / invalid — skip quantity changes
+      } else if (qty === 0) {
+        patch.quantity = 0
+        patch.lowStockAlertEnabled = false
+        touched = true
+      } else {
+        patch.quantity = qty
+        touched = true
+      }
+    }
+
+    if (isTimeAlertDue(item)) {
+      const days = parseNonNegInt(window.prompt(TIME_PROMPT, String(item.timeAlertIntervalDays || 30)))
+      if (days === null) {
+        // cancel / empty / invalid
+      } else if (days === 0) {
+        patch.timeAlertEnabled = false
+        patch.timeAlertIntervalDays = 0
+        patch.timeAlertAnchorAt = 0
+        touched = true
+      } else if ((TIME_ALERT_INTERVAL_DAYS as readonly number[]).includes(days)) {
+        patch.timeAlertEnabled = true
+        patch.timeAlertIntervalDays = days
+        patch.timeAlertAnchorAt = Date.now()
+        touched = true
+      }
+      // invalid positive day value → ignore time changes
+    }
+
+    if (touched) void onResetAlert?.(item.id, patch)
+  }
+
   return (
     <div className="alerts-wrap">
       <button
@@ -82,39 +148,34 @@ export function AlertsMenu({ items, onAcknowledgeTimeAlerts }: AlertsMenuProps) 
             </p>
           ) : (
             <ul className="alerts-list">
-              {alerting.map((item) => {
-                const timeDue = isTimeAlertDue(item)
-                return (
-                  <li key={item.id} className="alerts-item-row">
-                    <button
-                      type="button"
-                      className="alerts-item"
-                      id={`alert-item-${item.id}`}
-                      onClick={() => {
-                        setOpen(false)
-                        navigate(`/items/${item.id}`)
-                      }}
-                    >
-                      <span className="alerts-item-name">{item.name}</span>
-                      <span className="alerts-item-meta">{alertMetaLines(item)}</span>
-                    </button>
-                    {timeDue ? (
-                      <button
-                        type="button"
-                        className="alerts-reset-btn"
-                        id={`alert-reset-${item.id}`}
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          e.preventDefault()
-                          void onAcknowledgeTimeAlerts?.([item.id])
-                        }}
-                      >
-                        Reset
-                      </button>
-                    ) : null}
-                  </li>
-                )
-              })}
+              {alerting.map((item) => (
+                <li key={item.id} className="alerts-item-row">
+                  <button
+                    type="button"
+                    className="alerts-item"
+                    id={`alert-item-${item.id}`}
+                    onClick={() => {
+                      setOpen(false)
+                      navigate(`/items/${item.id}`)
+                    }}
+                  >
+                    <span className="alerts-item-name">{item.name}</span>
+                    <span className="alerts-item-meta">{alertMetaLines(item)}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="alerts-reset-btn"
+                    id={`alert-reset-${item.id}`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      e.preventDefault()
+                      handleReset(item)
+                    }}
+                  >
+                    Reset
+                  </button>
+                </li>
+              ))}
             </ul>
           )}
         </div>
