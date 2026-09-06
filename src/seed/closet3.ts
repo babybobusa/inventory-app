@@ -302,7 +302,7 @@ function toRecord(spec: Closet3SeedSpec, photoCount: number, now: number): ItemR
   }
 }
 
-const CLOSET3_RETAIL_VERSION = '3'
+const CLOSET3_RETAIL_VERSION = '4'
 const CLOSET3_RETAIL_KEY = 'inventory-closet3-retail-version'
 
 /** Insert missing closet3 items; refresh photos + costs away from StoDo when version bumps. */

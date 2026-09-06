@@ -192,7 +192,7 @@ function toRecord(spec: PaintSeedSpec, photoCount: number, now: number): ItemRec
   }
 }
 
-const PAINT_LISTING_VERSION = '3'
+const PAINT_LISTING_VERSION = '4'
 const PAINT_LISTING_KEY = 'inventory-paint-listing-version'
 
 /** Insert missing paint items; refresh both photos to full retailer shots when version bumps. */

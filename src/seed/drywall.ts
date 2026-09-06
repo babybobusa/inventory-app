@@ -184,7 +184,7 @@ async function fetchSeedPhoto(photoFile: string): Promise<Blob | undefined> {
 
 let seedLock: Promise<void> | null = null
 
-const SEED_PHOTO_VERSION = '3'
+const SEED_PHOTO_VERSION = '4'
 const SEED_PHOTO_VERSION_KEY = 'inventory-seed-photo-version'
 
 async function seedOnce(adapter: InventoryAdapter): Promise<void> {
