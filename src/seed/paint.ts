@@ -117,7 +117,7 @@ export const PAINT_SEED: PaintSeedSpec[] = [
   {
     id: 'paint-roller-9-black',
     name: "9 in x 1/4 in roller cover (black wrap)",
-    description: "9 in roller cover in black wrap, 1/4 in nap, smooth surfaces",
+    description: "9 in polyester knit roller cover (distinct SKU from green-label 1/4 in cover), smooth to semi-smooth surfaces",
     quantity: 1,
     cost: 6.5,
     location: 'Black closet 4th shelf',
@@ -192,10 +192,10 @@ function toRecord(spec: PaintSeedSpec, photoCount: number, now: number): ItemRec
   }
 }
 
-const PAINT_LISTING_VERSION = '2'
+const PAINT_LISTING_VERSION = '3'
 const PAINT_LISTING_KEY = 'inventory-paint-listing-version'
 
-/** Insert missing paint items; refresh to dual photos (shelf + listing) when version bumps. */
+/** Insert missing paint items; refresh both photos to full retailer shots when version bumps. */
 export async function seedPaintMissing(adapter: InventoryAdapter): Promise<void> {
   const existing = await adapter.list()
   const byId = new Map(existing.map((item) => [item.id, item]))
@@ -216,7 +216,16 @@ export async function seedPaintMissing(adapter: InventoryAdapter): Promise<void>
     }
     if (needsListingRefresh || (current.photoCount || 0) < 2) {
       await adapter.upsert(
-        { ...current, photoCount: count, updatedAt: now },
+        {
+          ...current,
+          name: spec.name,
+          description: spec.description,
+          cost: spec.cost,
+          recommendedPrice: recommendedPrice(spec.cost),
+          quantity: spec.quantity,
+          photoCount: count,
+          updatedAt: now,
+        },
         photos,
       )
     }
