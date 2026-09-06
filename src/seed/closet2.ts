@@ -391,8 +391,8 @@ export const CLOSET2_SEED: Closet2SeedSpec[] = [
   },
   {
     id: 'closet2-drain-weasel-handle',
-    name: "Drain Weasel reusable handle",
-    description: "FlexiSnake Drain Weasel reusable spinning handle for hair-clog refill wands",
+    name: "Drain Weasel starter kit (handle)",
+    description: "FlexiSnake Drain Weasel starter kit with reusable spinning handle and refill wands",
     quantity: 1,
     cost: 6.98,
     location: 'Black closet 2nd shelf',
@@ -445,7 +445,7 @@ function toRecord(spec: Closet2SeedSpec, photoCount: number, now: number): ItemR
   }
 }
 
-const CLOSET2_RETAIL_VERSION = '2'
+const CLOSET2_RETAIL_VERSION = '3'
 const CLOSET2_RETAIL_KEY = 'inventory-closet2-retail-version'
 
 /** Insert missing closet2 items; refresh photos + costs away from StoDo when version bumps. */

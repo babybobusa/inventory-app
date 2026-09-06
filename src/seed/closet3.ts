@@ -51,7 +51,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-wire-14-3',
     name: "14/3 NM-B wire remnant (~125 ft)",
-    description: "Blue 14/3 NM-B electrical cable remnant, about 125 ft; value from Home Depot per-foot pricing",
+    description: "White-jacket 14/3 NM-B electrical cable remnant, about 125 ft; value from Home Depot per-foot pricing",
     quantity: 1,
     cost: 98.75,
     location: 'Black closet 3rd shelf',
@@ -302,7 +302,7 @@ function toRecord(spec: Closet3SeedSpec, photoCount: number, now: number): ItemR
   }
 }
 
-const CLOSET3_RETAIL_VERSION = '2'
+const CLOSET3_RETAIL_VERSION = '3'
 const CLOSET3_RETAIL_KEY = 'inventory-closet3-retail-version'
 
 /** Insert missing closet3 items; refresh photos + costs away from StoDo when version bumps. */
