@@ -29,7 +29,7 @@ export const CLOSET3_SEED: Closet3SeedSpec[] = [
   {
     id: 'closet3-screen-spline',
     name: "ADFORS .125 x 25 ft screen spline",
-    description: "ADFORS black screen spline .125 in x 25 ft (StoDo listed as 1.25)",
+    description: "ADFORS black screen spline .125 in x 25 ft (package marks .125 in)",
     quantity: 2,
     cost: 15.0,
     location: 'Black closet 3rd shelf',

@@ -263,6 +263,7 @@ button {
 .product-photo {
   object-fit: contain;
   object-position: center;
+  max-width: 100%;
   background: #eef3f1;
 }
 
@@ -270,6 +271,9 @@ button {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
   background: #eef3f1;
 }
 
@@ -518,12 +522,15 @@ button {
 .form-photo,
 .photo-picker .photo-placeholder {
   width: 100%;
-  height: 180px;
+  height: auto;
+  min-height: 140px;
+  max-height: 280px;
   border-radius: var(--radius);
   display: grid;
   place-items: center;
   color: var(--muted);
   border: 1px dashed var(--border);
+  object-fit: contain;
 }
 
 .photo-picker-hint {
@@ -586,7 +593,8 @@ button {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 20px;
-  overflow: hidden;
+  /* overflow only for border-radius clipping; photos use contain + auto height */
+  overflow: clip;
   box-shadow: var(--shadow);
 }
 
@@ -624,14 +632,17 @@ button {
 .product-photo,
 .product .photo-placeholder {
   width: 100%;
-  height: 240px;
+  height: auto;
+  max-height: min(70vh, 520px);
+  display: block;
 }
 
 .product-photos-multi .product-photo,
 .product-photos-multi .photo-placeholder {
   flex: 0 0 calc(100% - 28px);
   width: calc(100% - 28px);
-  height: 220px;
+  height: auto;
+  max-height: min(65vh, 480px);
   border-radius: 12px;
   scroll-snap-align: start;
 }
@@ -744,14 +755,15 @@ button {
   .product .photo-placeholder {
     width: 260px;
     height: auto;
-    min-height: 260px;
+    max-height: 420px;
   }
 
   .product-photos-multi .product-photo,
   .product-photos-multi .photo-placeholder {
     flex: 0 0 auto;
     width: 100%;
-    height: 160px;
+    height: auto;
+    max-height: 280px;
     min-height: 0;
     scroll-snap-align: start;
   }
