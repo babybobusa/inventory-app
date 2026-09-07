@@ -13,7 +13,7 @@ export type Drawer5SeedSpec = {
   photoFile: string
 }
 
-export const DRAWER5_SEED_VERSION = '1'
+export const DRAWER5_SEED_VERSION = '2'
 const DRAWER5_SEED_KEY = 'inventory-drawer5-seed-version'
 
 export const DRAWER5_SEED: Drawer5SeedSpec[] = [
@@ -32,12 +32,23 @@ export const DRAWER5_SEED: Drawer5SeedSpec[] = [
     id: 'drawer5-concealed-cabinet-hinges',
     name: 'Loose silver concealed cabinet hinges',
     description:
-      'Assorted loose nickel/silver European-style concealed cabinet hinges (face-frame style), bagged plus loose pieces of the same type. Counted as individual hinges.',
-    quantity: 16,
+      'Loose nickel/silver European-style concealed cabinet hinges (clip-on cup hinges). Counted individually from close-up; four loose pieces.',
+    quantity: 4,
     cost: 3.5,
     location: 'drawer 5',
     application: 'Cabinetry',
     photoFile: 'drawer5/drawer5-concealed-cabinet-hinges.jpg',
+  },
+  {
+    id: 'drawer5-berta-face-frame-hinges',
+    name: 'Berta Face Frame Cabinet Door Hinges (4-Pack)',
+    description:
+      'Berta 4-piece face frame cabinet door hinges with screws (Amazon label X002TRODM1 / X002TRODMJ). Soft-close European concealed style in clear bag, New.',
+    quantity: 1,
+    cost: 16.88,
+    location: 'drawer 5',
+    application: 'Cabinetry',
+    photoFile: 'drawer5/drawer5-berta-face-frame-hinges.jpg',
   },
   {
     id: 'drawer5-primeline-n6703',
@@ -107,20 +118,20 @@ export const DRAWER5_SEED: Drawer5SeedSpec[] = [
   },
   {
     id: 'drawer5-folding-brackets',
-    name: 'Galvanized folding shelf brackets / lid stays',
+    name: 'Self-Locking Folding Leg Brackets Antique Bronze (2)',
     description:
-      'Articulated galvanized steel folding brackets (lid stay / folding shelf support style) with multiple mounting holes.',
+      'Self-locking foldable leg brackets, antique bronze steel, 2.68\" x 2.48\" x 2.13\" (L×W×H), 2.5 mm / 0.098\" thick. Spring latch locks at 90°. Pair with screws; matches instruction sheet specs (MDLUU/Skelang-class).',
     quantity: 2,
-    cost: 8.0,
+    cost: 4.5,
     location: 'drawer 5',
     application: 'Hardware',
     photoFile: 'drawer5/drawer5-folding-brackets.jpg',
   },
   {
     id: 'drawer5-brass-lid-stay',
-    name: 'Brass articulated lid stay',
+    name: 'Antique bronze telescopic lid stay',
     description:
-      'Single brass/gold-tone articulated lid stay or folding support hinge for a chest lid or cabinet door.',
+      'Single antique-bronze telescopic / sliding lid stay support arm with mounting brackets at both ends. For a chest lid or cabinet door (finish is antique bronze, not bright brass).',
     quantity: 1,
     cost: 7.0,
     location: 'drawer 5',
@@ -217,9 +228,9 @@ export const DRAWER5_SEED: Drawer5SeedSpec[] = [
   },
   {
     id: 'drawer5-ikea-besta-hinges',
-    name: 'IKEA BESTÅ soft-close/push-open hinge kit',
+    name: 'IKEA BESTÅ soft closing/push-open hinge (802.612.58)',
     description:
-      'IKEA BESTÅ soft closing / push-open hinge hardware, article 802.612.58, with instruction sheet and accompanying dark metal mounting brackets in small cardboard box.',
+      'IKEA BESTÅ soft closing / push-open hinge, article 802.612.58 (2x BESTÅ pack). Clear bag with official IKEA instruction sheet confirmed on close-up. Street price matches IKEA US $15.00 / 2-pack.',
     quantity: 1,
     cost: 15.0,
     location: 'drawer 5',
@@ -230,12 +241,23 @@ export const DRAWER5_SEED: Drawer5SeedSpec[] = [
     id: 'drawer5-edge-banding',
     name: 'Wood veneer edge banding roll',
     description:
-      'Small roll of thin wood-veneer / edge-banding tape (light natural tone), taped closed. Approx 2–3 in diameter remnant.',
+      'Small roll of thin wood-veneer edge-banding tape (light natural / birch tone), secured with clear tape. Remnant coil ~2–3 in diameter; confirmed wood veneer (not foil) from close-up.',
     quantity: 1,
     cost: 3.0,
     location: 'drawer 5',
     application: 'Hardware',
     photoFile: 'drawer5/drawer5-edge-banding.jpg',
+  },
+  {
+    id: 'drawer5-shoe-heel-taps',
+    name: 'Shoe heel taps 40 pcs (with glue)',
+    description:
+      'Amazon bag labeled 40 pcs shoe heel taps / plates (X002RT1GQZ), MADE IN CHINA. Black crescent rubber/plastic heel repair pads with small adhesive tubes included. Not hinge hardware.',
+    quantity: 1,
+    cost: 9.0,
+    location: 'drawer 5',
+    application: 'Hardware',
+    photoFile: 'drawer5/drawer5-shoe-heel-taps.jpg',
   },
 ]
 
