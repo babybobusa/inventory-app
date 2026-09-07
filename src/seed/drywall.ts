@@ -4,6 +4,7 @@ import type { ItemRecord } from '../types'
 import { seedCloset2Missing } from './closet2'
 import { seedCloset3Missing } from './closet3'
 import { seedPaintMissing } from './paint'
+import { seedDrawer5Missing } from './drawer5'
 
 export type SeedSpec = {
   id: string
@@ -229,6 +230,7 @@ export async function ensureSeeded(adapter: InventoryAdapter): Promise<void> {
       await seedCloset2Missing(adapter)
       await seedCloset3Missing(adapter)
       await seedPaintMissing(adapter)
+      await seedDrawer5Missing(adapter)
     })().catch((err) => {
       seedLock = null
       throw err
