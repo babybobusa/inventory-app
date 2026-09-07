@@ -606,6 +606,10 @@ button {
   font-weight: 700;
 }
 
+.item-form #item-location-new {
+  margin-top: 2px;
+}
+
 
 .photo-fieldset {
   border: 0;

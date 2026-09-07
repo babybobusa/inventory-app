@@ -76,7 +76,8 @@ Use these stable `id` / `name` attributes. Do not rename them.
 | Quantity | `item-quantity` | `quantity` |
 | Cost | `item-cost` | `cost` |
 | Recommended price (read only) | `item-recommended-price` | `recommendedPrice` |
-| Location | `item-location` | `location` |
+| Location (select) | `item-location` | `location` |
+| New location (when select is `__new__`) | `item-location-new` | `locationNew` |
 | Application | `item-application` | `application` |
 | Low stock alert (toggle) | `item-low-stock-alert` | `lowStockAlert` |
 | Low stock threshold | `item-low-stock-threshold` | `lowStockThreshold` |

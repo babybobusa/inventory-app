@@ -35,6 +35,16 @@ function defaultInterval(initial?: ItemRecord): string {
   return '30'
 }
 
+
+function defaultLocationSelect(initial: ItemRecord | undefined, locations: string[]): string {
+  if (initial?.location) return initial.location
+  if (locations.length) {
+    if (locations.includes('TBD')) return 'TBD'
+    return locations[0]
+  }
+  return '__new__'
+}
+
 export function ItemForm({
   mode,
   initial,
@@ -48,7 +58,8 @@ export function ItemForm({
   const [description, setDescription] = useState(initial?.description ?? '')
   const [quantity, setQuantity] = useState(String(initial?.quantity ?? 1))
   const [cost, setCost] = useState(initial ? String(initial.cost) : '')
-  const [location, setLocation] = useState(initial?.location ?? 'TBD')
+  const [locationSelect, setLocationSelect] = useState(() => defaultLocationSelect(initial, locations))
+  const [locationNew, setLocationNew] = useState('')
   const [application, setApplication] = useState(initial?.application ?? '')
   const [lowStockAlertEnabled, setLowStockAlertEnabled] = useState(
     initial?.lowStockAlertEnabled ?? false,
@@ -69,6 +80,18 @@ export function ItemForm({
     () => slots.map((slot) => (slot.file ? URL.createObjectURL(slot.file) : null)),
     [slots],
   )
+
+  const locationOptions = useMemo(() => {
+    const opts = [...locations]
+    if (
+      locationSelect &&
+      locationSelect !== '__new__' &&
+      !opts.includes(locationSelect)
+    ) {
+      opts.push(locationSelect)
+    }
+    return opts
+  }, [locations, locationSelect])
 
   useEffect(() => {
     return () => {
@@ -144,7 +167,10 @@ export function ItemForm({
           description,
           quantity: Number(quantity) || 0,
           cost: Number(cost) || 0,
-          location,
+          location:
+            locationSelect === '__new__'
+              ? locationNew.trim() || 'TBD'
+              : locationSelect,
           application,
           lowStockAlertEnabled,
           lowStockThreshold: Number(lowStockThreshold) || 0,
@@ -311,20 +337,33 @@ export function ItemForm({
       />
 
       <label htmlFor="item-location">Location</label>
-      <input
+      <select
         id="item-location"
         name="location"
-        type="text"
-        list="location-options"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-        placeholder="TBD"
-      />
-      <datalist id="location-options">
-        {locations.map((loc) => (
-          <option key={loc} value={loc} />
+        value={locationSelect}
+        onChange={(e) => setLocationSelect(e.target.value)}
+      >
+        {locationOptions.map((loc) => (
+          <option key={loc} value={loc}>
+            {loc}
+          </option>
         ))}
-      </datalist>
+        <option value="__new__">Add new location…</option>
+      </select>
+      {locationSelect === '__new__' ? (
+        <>
+          <label htmlFor="item-location-new">New location</label>
+          <input
+            id="item-location-new"
+            name="locationNew"
+            type="text"
+            value={locationNew}
+            onChange={(e) => setLocationNew(e.target.value)}
+            placeholder="Type a new location"
+            autoComplete="off"
+          />
+        </>
+      ) : null}
 
       <label htmlFor="item-application">Application</label>
       <input
